@@ -1,0 +1,174 @@
+---
+
+- name: Show svc name and its version to deploy
+  debug: msg="Start deploy svc {{ svc_name }} v{{ version }}"
+
+# stop svc
+
+- name: Get svc pid
+  shell:  ps -ef | grep '\-name {{name}}' | grep beam | grep -v grep | awk '{print $2}'
+  register: get_svc_pid_reg
+  changed_when: false
+  when: restart_svc
+
+- debug: var=get_svc_pid_reg.stdout
+
+- name: Stop service
+  shell: crm resource stop {{svc_name}}
+  when: restart_svc and
+        (get_svc_pid_reg.stdout != "")
+
+- name: Wait for svc stop
+  wait_for: path=/proc/{{get_svc_pid_reg.stdout}}/status state=absent
+  when: restart_svc and
+        (get_svc_pid_reg.stdout != "")
+
+# download and unpack
+
+- name: Register current version stat
+  stat: path=/opt/{{name}}{{name_suffix}}-{{version}}
+  register: curr_ver_reg
+  changed_when: false
+
+- name: Download archive
+  get_url: url=http://sus.dev1team.net/sus/poweralley/{{name}}{{name_suffix}}-{{version}}-{{os_version}}.x86_64.tar.gz
+           dest={{download_dir}}/{{name}}{{name_suffix}}-{{version}}-centos6.x86_64.tar.gz
+           url_username={{ lookup('env','SUS_USERNAME') }}
+           url_password={{ lookup('env','SUS_PASSWORD') }}
+  environment:
+    http_proxy: "{{http_proxy}}"
+  when: not curr_ver_reg.stat.exists
+
+- name: Unarchive
+  unarchive: src={{download_dir}}/{{name}}{{name_suffix}}-{{version}}-centos6.x86_64.tar.gz
+             dest=/opt/
+             copy=false
+  when: not curr_ver_reg.stat.exists
+
+#
+# DATA DIR
+#
+
+# - name: Define data_dir
+#   set_fact: data_dir="{{base_data_dir}}/{{name}}/{{data_dir_suffix}}"
+#   when: global_data_dir
+
+# - name: Register data dir stat
+#   stat: path={{data_dir}}
+#   register: data_dir_reg
+#   changed_when: false
+#   when: global_data_dir
+
+# - name: Register ls of local data dir
+#   command: ls /opt/{{name}}{{name_suffix}}-{{version}}/data/
+#   register: local_data_dir_reg
+#   changed_when: false
+#   when: global_data_dir
+
+# - name: Create data dir
+#   file: path={{data_dir}}
+#         state=directory
+#   when: global_data_dir
+
+# - name: Copy local data dir contents in case app was not previously installed
+#   shell: cp -r /opt/{{name}}{{name_suffix}}-{{version}}/data/* {{data_dir}}
+#   when: (not curr_ver_reg.stat.exists) and
+#         global_data_dir and
+#         (not data_dir_reg.stat.exists) and
+#         (local_data_dir_reg.stdout != "")
+
+- name: Remove local data dir
+  file: path=/opt/{{name}}{{name_suffix}}-{{version}}/data
+        state=absent
+  when: (not curr_ver_reg.stat.exists)
+
+- name: Create data dir link
+  file: src={{data_dir}}
+        dest=/opt/{{name}}{{name_suffix}}-{{version}}/data
+        state=link
+        force=yes
+
+#
+# LOG DIR
+#
+
+- name: Define log_dir
+  set_fact: log_dir="{{base_log_dir}}/{{name}}"
+
+- name: Register log dir stat
+  stat: path={{log_dir}}
+  register: log_dir_reg
+  changed_when: false
+
+# - name: Register ls of local log dir
+#   command: ls /opt/{{name}}{{name_suffix}}-{{version}}/log/
+#   register: local_log_dir_reg
+#   changed_when: false
+
+- name: Create log dir
+  file: path={{log_dir}}
+        state=directory
+
+# - name: Move local log dir contents
+#   shell: cp -r /opt/{{name}}{{name_suffix}}-{{version}}/log/* {{log_dir}}
+#   when: (not curr_ver_reg.stat.exists) and
+#         (not log_dir_reg.stat.exists) and
+#         (local_log_dir_reg.stdout != "")
+
+- name: Remove local log dir
+  file: path=/opt/{{name}}{{name_suffix}}-{{version}}/log
+        state=absent
+  when: (not curr_ver_reg.stat.exists)
+
+- name: Create log dir link
+  file: src={{log_dir}}
+        dest=/opt/{{name}}{{name_suffix}}-{{version}}/log
+        state=link
+
+# Other
+
+- name: Correct rights
+  file: path=/opt/{{name}}{{name_suffix}}-{{version}}
+        owner={{run_user}}
+        group={{run_user}}
+        recurse=true
+        force=yes
+
+- name: Correct log dir rights
+  file: path={{log_dir}}
+        owner={{run_user}}
+        group={{run_user}}
+        recurse=true
+        follow=true
+        force=yes
+
+- name: Register data dir stat
+  stat: path={{data_dir}}
+  register: data_dir_reg
+  changed_when: false
+
+- name: Correct data dir rights
+  file: path={{data_dir}}
+        owner={{run_user}}
+        group={{run_user}}
+        recurse=true
+        follow=true
+        force=yes
+  when: data_dir_reg.stat.exists
+
+- name: Create svc link
+  file: src=/opt/{{name}}{{name_suffix}}-{{version}}
+        dest=/opt/{{name}}
+        state=link
+
+- name: Remove archive
+  file: path={{download_dir}}/{{name}}{{name_suffix}}-{{version}}-centos6.x86_64.tar.gz
+        state=absent
+  when: remove_archive
+
+
+# stop svc
+
+- name: Start service
+  shell: crm resource start {{svc_name}}
+  when: restart_svc

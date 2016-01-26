@@ -1,0 +1,20 @@
+---
+os_version: centos5
+
+funnel_svc_name: Svc-Funnel
+just_svc_name: Svc-Just
+
+rabbitmq_host: IP-Rabbit
+
+funnel_data_dir: /mnt/funnel/data
+just_data_dir: /mnt/just/data
+
+mnp_state: 'off'
+mnp_home_network_id: 00000000-0000-0000-0000-000000000000
+
+just_instance: BMSENG1
+just_odbc_dsn: 'DSN=pmm_bat_mmwl'
+
+just_smpp_server_port: 2779
+
+rpc_timeout: 30000

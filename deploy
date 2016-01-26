@@ -1,0 +1,56 @@
+#!/bin/bash
+
+containsElement () {
+    local e
+    for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+    return 1
+}
+
+declare -a hosts
+hosts=(
+    zain-sa-m3
+    zain-sa-pp
+    zain-sa-stg
+    zain-kw-stg
+    zain-kw-pp
+    batelco-stg
+)
+
+declare -a services
+services=(
+    funnel
+    just
+)
+
+if [[ $# < 2 ]]; then
+    echo "Usage: deploy <HOST> <SERVICE> [VERSION]"
+    echo "Where:"
+    echo "  HOST: ${hosts[@]}"
+    echo "  SERVICE: ${services[@]}"
+    echo "  VERSION: by default from config file"
+    exit 1
+fi
+
+host_name=$1
+service_name=$2
+version=$3
+
+containsElement "$host_name" "${hosts[@]}"
+if [[ $(echo $?) == "1" ]]; then
+    echo "Unknown host:" $host_alias
+    exit 1
+fi
+
+containsElement "$service_name" "${services[@]}"
+if [[ $(echo $?) == "1" ]]; then
+    echo "Unknown service:" $service_alias
+    exit 1
+fi
+
+service_version=''
+if [[ ! -z $version ]]; then
+    service_version="--extra-vars version=${version}"
+fi
+
+ansible all -i inventories/${host_name} -m ping || exit 1
+ansible-playbook deploy.yml -i inventories/${host_name} --tags ${service_name} ${service_version} || exit 1

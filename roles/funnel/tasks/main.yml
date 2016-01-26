@@ -1,0 +1,13 @@
+---
+
+- include: ../../erlapp.yml
+  vars:
+      name: funnel
+      name_suffix: -full
+      version: "{{funnel_version}}"
+      data_dir: "{{funnel_data_dir}}"
+      svc_name: "{{funnel_svc_name}}"
+
+- name: Provision config
+  template: src=app.config.j2
+            dest=/opt/funnel-full-{{funnel_version}}/etc/app.config

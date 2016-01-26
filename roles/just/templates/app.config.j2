@@ -1,0 +1,174 @@
+%% -*- mode: erlang -*-
+
+[
+    %% Just config
+    {just, [
+        {instance, "{{just_instance}}"},
+
+        {ussd_single, true},
+        {ussd_http_app_desc, "PMM"},
+        {ussd_session_ttl_sec, 35},
+        {ussd_max_session_ttl_sec, 120},
+        {ussd_api_version, 2},
+
+        %% available from 3.5.0 version
+        {smpp_log_fmt_version, 2}, %% 2 to log in short format
+
+        {funnel_receipts_remove_interval, 3600}, %% seconds
+        {funnel_receipts_batch_max_time, 2000}, %% milliseconds
+        {funnel_receipts_batch_max_size, 200},
+
+        %% 24000 by default
+        {global_throughput_limit, "fdb399e92b64e6ce12cdf6d30a43d1a4MDAwMDAwMDI0MDAw"},
+
+        {odbc_dsn, "{{just_odbc_dsn}}"},
+
+        {amqp_username, <<"{{rabbitmq_username}}">>},
+        {amqp_password, <<"{{rabbitmq_password}}">>},
+        {amqp_vhost, <<"/">>},
+        {amqp_host, "{{rabbitmq_host}}"},
+        {amqp_port, {{rabbitmq_port}}},
+        {amqp_heartbeat, 0}, %% relevant for v3.5.0 and above
+
+        {file_log_dir, "log"},
+        {file_log_size, 5000000},
+        {file_log_rotations, 4},
+        {file_log_level, info},
+        {console_log, true},
+
+        {smpp_server_addr, {0,0,0,0}},
+        {smpp_server_port, {{just_smpp_server_port}}},
+
+        {replies_deadline, 120},
+
+        {smtp_server_addr, {0,0,0,0}},
+        {smtp_server_port, 2222},
+        {smtp_server_protocol, tcp},
+        {smtp_server_domain, "mail.operator.com"},
+        {smtp_server_greeting, "j smtp gateway ready"},
+        %{smtp_max_msg_size, 10000000}, % in bytes
+
+        {snmp_heartbeat_every, 30}
+    ]},
+
+    {bitcask, [
+         %% Default max file size (in bytes)
+         {max_file_size, 16#10000000}, % 200MB
+
+         {tombstone_version, 2},
+
+         %% Wait time to open a keydir (in seconds)
+         {open_timeout, 4},
+
+         %% Strategies available for syncing data to disk:
+         %% * none          - let the O/S decide
+         %% * o_sync        - use the O_SYNC flag to sync each write
+         %% * {seconds, N}  - call bitcask:sync/1 every N seconds
+         %%
+         %% Note that for the {seconds, N} strategy, it is up to the
+         %% API caller to execute the call on the interval. This config
+         %% option is (currently) a convenient placeholder for calling
+         %% applications.
+         {sync_strategy, none},
+
+         %% Require the CRC to be present at the end of hintfiles.
+         %% Bitcask defaults to a backward compatible mode where
+         %% old hint files will still be accepted without them.
+         %% It is safe to set this true for new deployments and will
+         %% become the default setting in a future release.
+         {require_hint_crc, false},
+
+         %% Merge window. Span of hours during which merge is acceptable.
+         %% * {Start, End} - Hours during which merging is permitted
+         %% * always       - Merging is always permitted (default)
+         %% * never        - Merging is never permitted
+         {merge_window, always},
+
+         %% Merge trigger variables. Files exceeding ANY of these
+         %% values will cause bitcask:needs_merge/1 to return true.
+         %%
+         {frag_merge_trigger, 60},              % >= 60% fragmentation
+         {dead_bytes_merge_trigger, 53687091}, % Dead bytes > 50 MB
+
+         %% Merge thresholds. Files exceeding ANY of these values
+         %% will be included in the list of files marked for merging
+         %% by bitcask:needs_merge/1.
+         %%
+         {frag_threshold, 40},                  % >= 40% fragmentation
+         {dead_bytes_threshold, 20368709},      % Dead bytes > 20 MB
+         {small_file_threshold, 10485760},      % File is < 10 MB
+
+         %% Fold keys thresholds.  max_fold_age will reuse the keydir if
+         %% another fold was started less than max_fold_age ago and there
+         %% were less than max_fold_puts updates.  Otherwise it will
+         %% wait until all current fold keys complete and then start.
+         %% Set either option to -1 to disable.
+         {max_fold_age, -1},               % age in micro seconds (unlimited)
+         {max_fold_puts, 0},               % maximum number of updates
+
+         %% Data expiration can be caused by setting this to a
+         %% positive value.  If so, items older than the value
+         %% will be discarded.
+         {expiry_secs, 172800} %% 2 days
+    ]},
+
+    %% SASL config
+    {sasl, [
+        {sasl_error_logger, {file, "log/sasl-error.log"}},
+        {errlog_type, error}
+    ]},
+
+    %% riak_err config for J3 version < 3.5.0
+    {riak_err, [
+        {term_max_size, 10240}, % size limit of args combined
+        {fmt_max_bytes, 10240}  % size limit of a formatted term
+    ]},
+
+    %% SNMP config
+    {snmp, [
+        {agent, [
+            {config, [{dir, "etc/snmp"}]},
+            {db_dir, "data/snmp"}
+        ]}
+    ]},
+
+    %% Mnesia config
+    {mnesia, [
+        {dir, "data/mnesia"}
+    ]},
+
+    %% Inets config
+    {inets, [
+        {services, [{httpc, []}]}
+    ]},
+
+    {lager, [
+        {handlers, []},
+        %% Whether to write a crash log, and where. Undefined means no crash logger.
+        {crash_log, "log/crash.log"},
+        %% Maximum size in bytes of events in the crash log - defaults to 65536
+        {crash_log_msg_size, 65536},
+        %% Maximum size of the crash log in bytes, before its rotated, set
+        %% to 0 to disable rotation - default is 0
+        {crash_log_size, 50000000},
+        %% What time to rotate the crash log - default is no time
+        %% rotation. See the README for a description of this format.
+        {crash_log_date, "$D0"},
+        %% Number of rotated crash logs to keep, 0 means keep only the
+        %% current one - default is 0
+        {crash_log_count, 7},
+        %% Whether to redirect error_logger messages into the default lager_event sink - defaults to true
+        {error_logger_redirect, true},
+        %% How many messages per second to allow from error_logger before we start dropping them
+        {error_logger_hwm, 50},
+        %% How big the gen_event mailbox can get before it is
+        %% switched into sync mode.  This value only applies to
+        %% the default sink; extra sinks can supply their own.
+        {async_threshold, 20},
+        %% Switch back to async mode, when gen_event mailbox size
+        %% decrease from `async_threshold' to async_threshold -
+        %% async_threshold_window. This value only applies to the
+        %% default sink; extra sinks can supply their own.
+        {async_threshold_window, 5}
+    ]}
+].

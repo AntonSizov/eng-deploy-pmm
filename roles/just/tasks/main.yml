@@ -1,0 +1,13 @@
+---
+
+- include: ../../erlapp.yml
+  vars:
+      name: just
+      name_suffix: -full
+      version: "{{just_version}}"
+      data_dir: "{{just_data_dir}}"
+      svc_name: "{{just_svc_name}}"
+
+- name: Provision config
+  template: src=app.config.j2
+            dest=/opt/just-full-{{just_version}}/etc/app.config

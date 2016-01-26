@@ -1,0 +1,7 @@
+[zain-kw-stg-eng]
+eng1 ansible_ssh_host=10.10.150.172 ansible_ssh_user=root
+eng2 ansible_ssh_host=10.10.150.173 ansible_ssh_user=root
+
+[zain-kw]
+eng1
+eng2

@@ -1,0 +1,153 @@
+%% -*- mode: erlang -*-
+
+[
+    %% Funnel config
+    {funnel, [
+
+        % amqp connection settings.
+        {amqp_username,         <<"{{rabbitmq_username}}">>},
+        {amqp_password,         <<"{{rabbitmq_password}}">>},
+        {amqp_host,             "{{rabbitmq_host}}"},
+        {amqp_port,             {{rabbitmq_port}}},
+        {amqp_virtual_host,     <<"/">>},
+
+        %%
+        %%  used up to v3.2.18
+        %%
+        {queue_backend_auth,        <<"pmm.mmwl.funnel_auth">>},
+        {queue_backend_config,      <<"pmm.mmwl.funnel_config">>},
+        {queue_backend_events,      <<"pmm.mmwl.funnel_events">>},
+        {queue_backend_batches,     <<"pmm.mmwl.funnel_batches">>},
+        {queue_backend_batches_ec,  <<"pmm.mmwl.funnel_batches.extra">>},
+        {queue_backend_batches_dlr, <<"pmm.mmwl.funnel_batches.dlr">>},
+        {queue_server_control,      <<"pmm.funnel.server_control">>},
+        {queue_lists_changes,       <<"pmm.funnel.lists_changes">>},
+        {queue_nodes_prefix,        <<"pmm.funnel.nodes">>},
+        {queue_gateway_pattern,     <<"pmm.just.gateway.%id%.%prio%">>},
+        {queue_backend_updates,     <<"pmm.mmwl.funnel_node_changes">>},
+        {queue_mnp_updates,         <<"pmm.mmwl.funnel_mnp_changes">>},
+        {queue_extra_content,       <<"pmm.mmwl.funnel_extra_content">>},
+        {queue_delivery_pattern,    <<"pmm.funnel.dlr.%uidx%">>},
+        %%
+        %%  used up to v3.2.18 (end)
+        %%
+
+        % mnp settings
+        {mnp,                       {{mnp_state}}},
+        {mnp_home_network_id,       "{{mnp_home_network_id}}"}, %% substitute with real Home NetworkId
+        % mnp storage settings
+        {mnp_storage_compression,   none},
+        {mnp_storage_cache_size,    1000000},
+        {mnp_storage_bnum,          10000000}
+    ]},
+
+    %%
+    %%  used up to v3.2.18
+    %%
+    %% SASL config
+    {sasl, [
+        {sasl_error_logger,        {file, "log/sasl-error.log"}},
+        {errlog_type,              error}
+    ]},
+    %% riak_err config
+    {riak_err, [
+        {term_max_size, 10240}, % size limit of args combined
+        {fmt_max_bytes, 10240}  % size limit of a formatted term
+    ]},
+    %%
+    %% used up to v3.2.18 (end)
+    %%
+
+    %% SNMP config
+    {snmp, [
+        {agent, [
+            {config, [{dir, "etc/snmp"}]},
+            {db_dir, "data/snmp"}
+        ]}
+    ]},
+
+    %% Mnesia config
+    {mnesia, [
+        {dir, "data/mnesia"}
+    ]},
+
+    {lager, [
+        {log_root, "log"},
+
+        {handlers, [
+            {lager_console_backend, [
+                debug,
+                {lager_default_formatter, [date, " ", time," [",severity,"] ", pid, " ", message, "\n"]}
+            ]},
+            {lager_file_backend, [
+                {file, "funnel.log"},
+                {level, info},
+                {size, 50000000},
+                {date, "$D0"},
+                {count, 7},
+                {formatter, lager_default_formatter},
+                {formatter_config, [date, " ", time," [",severity,"] ", pid, " ", message, "\n"]}
+            ]}
+        ]},
+
+        {extra_sinks, [
+            {fun_mnp_collisions_log_lager_event, [
+                {handlers, [
+                    {lager_file_backend, [
+                        {file, "mnp_collisions.log"},
+                        {level, info},
+                        {size, 50000000},
+                        {date, "$D0"},
+                        {count, 7},
+                        {formatter, lager_default_formatter},
+                        {formatter_config, [date, " ", time, " ", message, "\n"]}
+                    ]}
+                ]},
+                {async_threshold, 20},
+                {async_threshold_window, 5}
+            ]},
+            {fun_blacklisted_log_lager_event, [
+                {handlers, [
+                    {lager_file_backend, [
+                        {file, "blacklisted.log"},
+                        {level, info},
+                        {size, 50000000},
+                        {date, "$D0"},
+                        {count, 7},
+                        {formatter, lager_default_formatter},
+                        {formatter_config, [date, " ", time, " ", message, "\n"]}
+                    ]}
+                ]},
+                {async_threshold, 20},
+                {async_threshold_window, 5}
+            ]}
+        ]},
+
+        %% Whether to write a crash log, and where. Undefined means no crash logger.
+        {crash_log, "crash.log"},
+        %% Maximum size in bytes of events in the crash log - defaults to 65536
+        {crash_log_msg_size, 65536},
+        %% Maximum size of the crash log in bytes, before its rotated, set
+        %% to 0 to disable rotation - default is 0
+        {crash_log_size, 50000000},
+        %% What time to rotate the crash log - default is no time
+        %% rotation. See the README for a description of this format.
+        {crash_log_date, "$D0"},
+        %% Number of rotated crash logs to keep, 0 means keep only the
+        %% current one - default is 0
+        {crash_log_count, 7},
+        %% Whether to redirect error_logger messages into the default lager_event sink - defaults to true
+        {error_logger_redirect, true},
+        %% How many messages per second to allow from error_logger before we start dropping them
+        {error_logger_hwm, 50},
+        %% How big the gen_event mailbox can get before it is
+        %% switched into sync mode.  This value only applies to
+        %% the default sink; extra sinks can supply their own.
+        {async_threshold, 20},
+        %% Switch back to async mode, when gen_event mailbox size
+        %% decrease from `async_threshold' to async_threshold -
+        %% async_threshold_window. This value only applies to the
+        %% default sink; extra sinks can supply their own.
+        {async_threshold_window, 5}
+    ]}
+].

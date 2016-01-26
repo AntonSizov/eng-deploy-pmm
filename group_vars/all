@@ -1,0 +1,16 @@
+---
+run_user: bms
+download_dir: /tmp
+
+rabbitmq_port: 5672
+rabbitmq_username: guest
+rabbitmq_password: guest
+
+base_log_dir: /var/log
+
+http_proxy: ''
+
+restart_svc: false
+remove_archive: true
+
+rpc_timeout: 5000
