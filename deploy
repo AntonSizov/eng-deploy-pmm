@@ -95,4 +95,6 @@ if [[ ! -z $version ]]; then
 fi
 
 # ansible all -i inventories/${host_name} -m ping || exit 1
+export SUS_PASSWORD
+export SUS_USERNAME
 ansible-playbook ${ASK_PASSWORD} deploy.yml -i inventories/${host_name} --tags ${service_name} ${service_version} || exit 1
