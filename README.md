@@ -26,6 +26,14 @@ or `credentials` file
 $ echo -e "SUS_USERNAME=<name>\nSUS_PASSWORD=<pass>" > credentials
 ```
 
+#### Ask ssh password
+
+If you did not setup ssh access using keys (but you have to) you can ask scripts to use
+password.
+
+```bash
+echo "ASK_PASSWORD=-k" >> credentials
+```
 
 #### Run script
 
@@ -47,4 +55,7 @@ Where:
 
 You can also provide credentials with 'credentials' file:
 $ echo -e "SUS_USERNAME=<name>\nSUS_PASSWORD=<pass>" > credentials
+
+You can also setup script to ask ssh password:
+$ echo "ASK_PASSWORD=-k" >> credentials
 ```
