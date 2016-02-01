@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ -f credentials ];then
+    . credentials
+fi
+
 containsElement () {
     local e
     for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
@@ -22,12 +26,32 @@ services=(
     just
 )
 
-if [[ $# < 2 ]]; then
-    echo "Usage: deploy <HOST> <SERVICE> [VERSION]"
+function print_help {
+    echo "Usage: [SUS_USERNAME=<name> SUS_PASSWORD=<pass>] ./deploy <HOST> <SERVICE> [VERSION]"
     echo "Where:"
     echo "  HOST: ${hosts[@]}"
     echo "  SERVICE: ${services[@]}"
     echo "  VERSION: by default from config file"
+    echo ""
+    echo "You can also provide credentials with 'credentials' file:"
+    echo "$ echo -e \"SUS_USERNAME=<name>\nSUS_PASSWORD=<pass>\" > credentials"
+}
+
+if [[ "$SUS_USERNAME" == "" ]];then
+    printf "\e[1;33m[WARN] Please provide sus username\e[0m\n"
+    print_help
+    exit 1
+fi
+
+if [[ "$SUS_PASSWORD" == "" ]];then
+    printf "\e[1;33m[WARN] Please provide sus password\e[0m\n"
+    print_help
+    exit 1
+fi
+
+
+if [[ $# < 2 ]]; then
+    print_help
     exit 1
 fi
 
