@@ -1,15 +1,15 @@
 #!/bin/bash
 
-CURRENT_COMMIT=$(git log -1 | head -1 | awk '{print $2}')
-LAST_COMMIT=$(curl -s https://api.github.com/repos/AntonSizov/eng-deploy-pmm/git/refs/heads/master | grep sha | awk '{print substr($2, 2, 40)}')
+# CURRENT_COMMIT=$(git log -1 | head -1 | awk '{print $2}')
+# LAST_COMMIT=$(curl -s https://api.github.com/repos/AntonSizov/eng-deploy-pmm/git/refs/heads/master | grep sha | awk '{print substr($2, 2, 40)}')
 
-if [[ "$CURRENT_COMMIT" != "$LAST_COMMIT" ]]; then
-    echo "You version of script is outdated, please update it:"
-    echo "$ git pull origin master"
-    echo "Current version hash:" $CURRENT_COMMIT
-    echo "Last available version hash:" $LAST_COMMIT
-    exit 1
-fi
+# if [[ "$CURRENT_COMMIT" != "$LAST_COMMIT" ]]; then
+#     echo "You version of script is outdated, please update it:"
+#     echo "$ git pull origin master"
+#     echo "Current version hash:" $CURRENT_COMMIT
+#     echo "Last available version hash:" $LAST_COMMIT
+#     exit 1
+# fi
 
 if [ -f credentials ];then
     . credentials
