@@ -1,0 +1,20 @@
+---
+os_version: centos6
+
+funnel_svc_name: svc-fun
+just_svc_name: svc-j3
+
+rabbitmq_host: ip-rabbit
+
+funnel_data_dir: /mnt/fs-fun/funnel-data
+just_data_dir: /mnt/fs-j3/just-data/
+
+mnp_state: 'off'
+mnp_home_network_id: 00000000-0000-0000-0000-000000000000
+
+just_instance: BMSENG1
+just_odbc_dsn: 'DSN=mmwl'
+
+just_smpp_server_port: 2776
+
+rpc_timeout: 30000

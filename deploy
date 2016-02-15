@@ -32,6 +32,7 @@ hosts=(
     zain-kw-pp
     batelco-stg
     qtel-stg
+    asiacell-stg
 )
 
 declare -a services
