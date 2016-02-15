@@ -1,0 +1,10 @@
+[qtel-stg-eng]
+eng1 ansible_ssh_host=10.10.150.156 ansible_ssh_user=root
+eng2 ansible_ssh_host=10.10.150.157 ansible_ssh_user=root
+
+[qtel]
+eng1
+eng2
+
+[outdoors]
+# keep it empty for indoors
