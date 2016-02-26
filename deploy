@@ -33,6 +33,7 @@ hosts=(
     batelco-stg
     qtel-stg
     asiacell-stg
+    pmmv6-stg
 )
 
 declare -a services

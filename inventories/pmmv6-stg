@@ -1,0 +1,10 @@
+[pmmv6-stg-eng]
+eng1 ansible_ssh_host=eng1.pmmv6.stg.pmmnet ansible_ssh_user=root
+eng2 ansible_ssh_host=eng2.pmmv6.stg.pmmnet ansible_ssh_user=root
+
+[pmmv6]
+eng1
+eng2
+
+[outdoors]
+# keep it empty for indoors
