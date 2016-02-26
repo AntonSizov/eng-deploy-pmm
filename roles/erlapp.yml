@@ -93,27 +93,27 @@
 #
 
 - name: Define log_dir
-  set_fact: log_dir="{{base_log_dir}}/{{name}}"
+  set_fact: log_dir="{{base_log_dir}}/eng-{{name}}"
 
 - name: Register log dir stat
   stat: path={{log_dir}}
   register: log_dir_reg
   changed_when: false
 
-# - name: Register ls of local log dir
-#   command: ls /opt/{{name}}{{name_suffix}}-{{version}}/log/
-#   register: local_log_dir_reg
-#   changed_when: false
+- name: Register ls of local log dir
+  shell: /bin/ls ./opt/{{name}}{{name_suffix}}-{{version}}/log/ 2>/dev/null || /bin/echo -n ''
+  register: local_log_dir_reg
+  changed_when: false
 
 - name: Create log dir
   file: path={{log_dir}}
         state=directory
 
-# - name: Move local log dir contents
-#   shell: cp -r /opt/{{name}}{{name_suffix}}-{{version}}/log/* {{log_dir}}
-#   when: (not curr_ver_reg.stat.exists) and
-#         (not log_dir_reg.stat.exists) and
-#         (local_log_dir_reg.stdout != "")
+- name: Move local log dir contents
+  shell: cp -r /opt/{{name}}{{name_suffix}}-{{version}}/log/* {{log_dir}}
+  when: (not curr_ver_reg.stat.exists) and
+        (not log_dir_reg.stat.exists) and
+        (local_log_dir_reg.stdout != "")
 
 - name: Remove local log dir
   file: path=/opt/{{name}}{{name_suffix}}-{{version}}/log
