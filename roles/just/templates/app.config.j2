@@ -48,9 +48,57 @@
         {smtp_server_greeting, "j smtp gateway ready"},
         %{smtp_max_msg_size, 10000000}, % in bytes
 
-        {snmp_heartbeat_every, 30}
+        {snmp_heartbeat_every, 30},
+
+        %%
+        %% See src/bitcask.app.src for details about bitcask props
+        %%
+
+        {funnel_receipts_storage_merge_check_interval, 180000}, %% milliseconds
+        {funnel_receipts_bitcask_storage_props, [
+            {max_file_size, 50000000},             % bytes
+            {tombstone_version, 2},
+            {open_timeout, 4},                     % seconds
+            {sync_strategy, none},
+            {require_hint_crc, false},
+            {merge_window, always},                % currently ignored
+            {frag_merge_trigger, 60},              % fragmentation, %
+            {dead_bytes_merge_trigger, 35000000},  % bytes
+            {frag_threshold, 40},                  % fragmentation, %
+            {dead_bytes_threshold, 20368709},      % bytes
+            {small_file_threshold, 10485760},      % bytes
+            {max_fold_age, -1},                    % age in micro seconds (unlimited)
+            {max_fold_puts, 0},                    % maximum number of updates
+            {expiry_secs, 172800}                  % 2 days
+            %% {max_merge_size, ?}                 % for needs_merge only
+        ]},
+
+        {dedup_storage_merge_check_interval, 180000}, %% milliseconds
+        {dedup_bitcask_storage_props, [
+            {max_file_size, 50000000},             % bytes
+            {tombstone_version, 2},
+            {open_timeout, 4},                     % seconds
+            {sync_strategy, none},
+            {require_hint_crc, false},
+            {merge_window, always},                % currently ignored
+            {frag_merge_trigger, 100},             % fragmentation, %
+            {dead_bytes_merge_trigger, 50000000},  % bytes
+            {frag_threshold, 100},                 % fragmentation, %
+            {dead_bytes_threshold, 50000000},      % bytes
+            {small_file_threshold, 0},             % bytes
+            {max_fold_age, -1},                    % age in micro seconds (unlimited)
+            {max_fold_puts, 0},                    % maximum number of updates
+            {expiry_secs, 86400}                   % 1 day
+        ]},
+
+        {mr_id_status_db_gc_interval, 7200000},   % 2h, milliseconds
+        {mr_id_status_db_stopped_ttl, 86400000},   % 1 day, milliseconds
+
+        {pid_file, "just.pid"}
     ]},
 
+
+    %% deprecated (have been used only in 3.6.x)
     {bitcask, [
          %% Default max file size (in bytes)
          {max_file_size, 50000000},
@@ -143,9 +191,29 @@
     ]},
 
     {lager, [
+        {log_root, "log"},
+
         {handlers, []},
+
+        {extra_sinks, [
+            {j_migrations_logger_lager_event, [
+                {handlers, [
+                    {lager_file_backend, [
+                        {file, "migrations.log"},
+                        {level, info},
+                        {size, 1000000},
+                        {date, ""}, %% time rotation disabled
+                        {count, 3},
+                        {formatter, lager_default_formatter}
+                    ]}
+                ]},
+                {async_threshold, 20},
+                {async_threshold_window, 5}
+            ]}
+        ]},
+
         %% Whether to write a crash log, and where. Undefined means no crash logger.
-        {crash_log, "log/crash.log"},
+        {crash_log, "crash.log"},
         %% Maximum size in bytes of events in the crash log - defaults to 65536
         {crash_log_msg_size, 65536},
         %% Maximum size of the crash log in bytes, before its rotated, set
