@@ -40,6 +40,15 @@
         {mnp_storage_cache_size,    1000000},
         {mnp_storage_bnum,          10000000},
 
+
+        %% NOTE (convert_cache)
+        %% 1. false by default
+        %% 2. remove this option line after new Funnel first start, to disable cache convertion
+        %% in the future
+        %% 3. then you can remove converted cache, when MMWL will be deployed and Funnel
+        %% start operate as usual
+        %% {convert_cache, true},
+
         {pid_file,                  "funnel.pid"}
     ]},
 
