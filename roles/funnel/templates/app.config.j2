@@ -117,6 +117,20 @@
                 {async_threshold, 20},
                 {async_threshold_window, 5}
             ]},
+            {fun_migrations_logger_lager_event, [
+                {handlers, [
+                    {lager_file_backend, [
+                        {file, "migrations.log"},
+                        {level, info},
+                        {size, 1000000},
+                        {date, ""}, %% time rotation disabled
+                        {count, 3},
+                        {formatter, lager_default_formatter}
+                    ]}
+                ]},
+                {async_threshold, 20},
+                {async_threshold_window, 5}
+            ]},
             {fun_blacklisted_log_lager_event, [
                 {handlers, [
                     {lager_file_backend, [
