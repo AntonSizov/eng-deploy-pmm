@@ -14,7 +14,7 @@
 - debug: var=get_svc_pid_reg.stdout
 
 - name: Stop service
-  shell: crm resource stop {{svc_name}}
+  command: /usr/sbin/crm resource stop {{svc_name}}
   when: restart_svc and
         (get_svc_pid_reg.stdout != "")
 
@@ -170,5 +170,5 @@
 # stop svc
 
 - name: Start service
-  shell: crm resource start {{svc_name}}
+  shell: /usr/sbin/crm resource start {{svc_name}}
   when: restart_svc

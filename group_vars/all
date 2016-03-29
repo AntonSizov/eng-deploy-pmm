@@ -10,7 +10,7 @@ base_log_dir: /var/log
 
 http_proxy: ''
 
-restart_svc: false
+restart_svc: true
 remove_archive: true
 
 rpc_timeout: 30000
