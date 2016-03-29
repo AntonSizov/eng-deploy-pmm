@@ -43,7 +43,7 @@ services=(
 )
 
 function print_help {
-    echo "Usage: [SUS_USERNAME=<name> SUS_PASSWORD=<pass>] ./deploy <HOST> <SERVICE> [VERSION]"
+    echo "Usage: [SUS_USERNAME=<name> SUS_PASSWORD=<pass>] ./deploy <HOST> <SERVICE> <VERSION>"
     echo "Where:"
     echo "  HOST: ${hosts[@]}"
     echo "  SERVICE: ${services[@]}"
@@ -93,8 +93,12 @@ if [[ $(echo $?) == "1" ]]; then
 fi
 
 service_version=''
-if [[ ! -z $version ]]; then
-    service_version="--extra-vars version=${version}"
+if [[ -z $version ]]; then
+    printf "\e[1;33m[ERR] Missed service version\e[0m\n"
+    print_help
+    exit 1
+else
+    service_version="--extra-vars service_version=${version}"
 fi
 
 # ansible all -i inventories/${host_name} -m ping || exit 1

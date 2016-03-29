@@ -3,5 +3,5 @@
   hosts: all
   sudo: true
   roles:
-  - {role: funnel,       tags: ["funnel"],   when: funnel_version is defined}
-  - {role: just,         tags: ["just"],     when: just_version is defined}
+  - {role: funnel,       tags: ["funnel"],   when: service_version is defined}
+  - {role: just,         tags: ["just"],     when: service_version is defined}
