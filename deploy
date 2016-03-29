@@ -1,6 +1,7 @@
 #!/bin/bash
 
-CURRENT_VERSION=$(cat version)
+VERSION_FILE=$(dirname $0)/version
+CURRENT_VERSION=$(cat ${VERSION_FILE})
 LAST_VERSION=$(curl -H 'Cache-Control:max-age=0' -s https://raw.githubusercontent.com/AntonSizov/eng-deploy-pmm/master/version)
 
 if [[ "$CURRENT_VERSION" != "$LAST_VERSION" ]]; then
