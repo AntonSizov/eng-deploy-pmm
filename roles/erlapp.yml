@@ -127,6 +127,13 @@
 
 # Other
 
+- stat: path=/opt/{{name}}{{name_suffix}}-{{version}}/ansible
+  register: ansible_marker
+- name: Create ansible marker file in application root directory
+  file: path=/opt/{{name}}{{name_suffix}}-{{version}}/ansible state=touch owner={{run_user}} group={{run_user}}
+  when: (not curr_ver_reg.stat.exists) and
+        (not ansible_marker.stat.exists)
+
 - name: Correct rights
   file: path=/opt/{{name}}{{name_suffix}}-{{version}}
         owner={{run_user}}
