@@ -11,6 +11,7 @@ funnel_data_dir: /mnt/fs-fun/funnel-data
 just_data_dir: /mnt/fs-j3/just-data
 
 mnp_state: 'on'
+mnp_enabled: 'true'
 mnp_home_network_id: 64c6d645-f998-4fb2-a00a-16c8c45eab99
 
 just_instance: BMSENG1

@@ -33,7 +33,8 @@
         %%
 
         % mnp settings
-        {mnp,                       {{mnp_state}}},
+        {mnp,                       {{mnp_state}}},   %% deprecated
+        {mnp_enabled,               {{mnp_enabled}}}, %% appeared in v3.5.x
         {mnp_home_network_id,       "{{mnp_home_network_id}}"}, %% substitute with real Home NetworkId
 
         %%
@@ -57,7 +58,10 @@
         %%  used up to v3.5.x (end)
         %%
 
-        {pid_file,                  "funnel.pid"} % appeared in v3.5.x
+        %% appeared in v3.5.x
+        {max_smpp_connections,      1000},
+        {mps_limit,                 10000},
+        {pid_file,                  "funnel.pid"}
     ]},
 
     %%
