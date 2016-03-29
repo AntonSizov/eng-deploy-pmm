@@ -35,11 +35,15 @@
         % mnp settings
         {mnp,                       {{mnp_state}}},
         {mnp_home_network_id,       "{{mnp_home_network_id}}"}, %% substitute with real Home NetworkId
+
+        %%
+        %%  used up to v3.5.x
+        %%
+
         % mnp storage settings
         {mnp_storage_compression,   none},
         {mnp_storage_cache_size,    1000000},
         {mnp_storage_bnum,          10000000},
-
 
         %% NOTE (convert_cache)
         %% 1. false by default
@@ -49,7 +53,11 @@
         %% start operate as usual
         %% {convert_cache, true},
 
-        {pid_file,                  "funnel.pid"}
+        %%
+        %%  used up to v3.5.x (end)
+        %%
+
+        {pid_file,                  "funnel.pid"} % appeared in v3.5.x
     ]},
 
     %%
