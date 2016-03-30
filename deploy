@@ -1,6 +1,8 @@
 #!/bin/bash
 
 VERSION_FILE=$(dirname $0)/version
+DEPLOY_YML=$(dirname $0)/deploy.yml
+CREDENTIALS=$(dirname $0)/credentials
 CURRENT_VERSION=$(cat ${VERSION_FILE})
 LAST_VERSION=$(curl -H 'Cache-Control:max-age=0' -s https://raw.githubusercontent.com/AntonSizov/eng-deploy-pmm/master/version)
 
@@ -14,8 +16,8 @@ if [[ "$CURRENT_VERSION" != "$LAST_VERSION" ]]; then
     exit 1
 fi
 
-if [ -f credentials ];then
-    . credentials
+if [ -f ${CREDENTIALS} ];then
+    . ${CREDENTIALS}
 fi
 
 containsElement () {
@@ -105,4 +107,4 @@ fi
 # ansible all -i inventories/${host_name} -m ping || exit 1
 export SUS_PASSWORD
 export SUS_USERNAME
-ansible-playbook ${ASK_PASSWORD} deploy.yml -i inventories/${host_name} --tags ${service_name} ${service_version} || exit 1
+ansible-playbook ${ASK_PASSWORD} ${DEPLOY_YML} -i $(dirname $0)/inventories/${host_name} --tags ${service_name} ${service_version} || exit 1
