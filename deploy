@@ -6,7 +6,7 @@ CREDENTIALS=$(dirname $0)/credentials
 CURRENT_VERSION=$(cat ${VERSION_FILE})
 LAST_VERSION=$(curl -H 'Cache-Control:max-age=0' -s https://raw.githubusercontent.com/AntonSizov/eng-deploy-pmm/master/version)
 
-if [[ "$CURRENT_VERSION" != "$LAST_VERSION" ]]; then
+if [[ "$CURRENT_VERSION" -lt "$LAST_VERSION" ]]; then
     echo "You version of script is outdated, please update it:"
     echo
     echo "$ git pull origin master"
