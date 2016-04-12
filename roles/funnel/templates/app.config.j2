@@ -62,7 +62,8 @@
         {smpp_log_fmt_version,      2},
         {max_smpp_connections,      1000},
         {mps_limit,                 10000},
-        {pid_file,                  "funnel.pid"}
+        {pid_file,                  "funnel.pid"},
+        {rotate_tracker_db_at,      {daily, {3, 0, 0}})  %% local; no dst; false | erlcron:run_when()
     ]},
 
     %%
