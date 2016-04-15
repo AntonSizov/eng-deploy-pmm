@@ -209,6 +209,51 @@
                 ]},
                 {async_threshold, 20},
                 {async_threshold_window, 5}
+            ]},
+            {j_system_stat_logger_lager_event, [
+                {handlers, [
+                    {lager_file_backend, [
+                        {file, "stat/system.log"},
+                        {level, info},
+                        {size, 10000000},
+                        {date, ""}, %% time rotation disabled
+                        {count, 3},
+                        {formatter, lager_default_formatter},
+                        {formatter_config, [date, " ", time, " ", message, "\n"]}
+                    ]}
+                ]},
+                {async_threshold, 20},
+                {async_threshold_window, 5}
+            ]},
+            {j_schedulers_stat_logger_lager_event, [
+                {handlers, [
+                    {lager_file_backend, [
+                        {file, "stat/schedulers.log"},
+                        {level, info},
+                        {size, 10000000},
+                        {date, ""}, %% time rotation disabled
+                        {count, 3},
+                        {formatter, lager_default_formatter},
+                        {formatter_config, [date, " ", time, " ", message, "\n"]}
+                    ]}
+                ]},
+                {async_threshold, 20},
+                {async_threshold_window, 5}
+            ]},
+            {j_throughput_stat_logger_lager_event, [
+                {handlers, [
+                    {lager_file_backend, [
+                        {file, "stat/throughput.log"},
+                        {level, info},
+                        {size, 10000000},
+                        {date, ""}, %% time rotation disabled
+                        {count, 3},
+                        {formatter, lager_default_formatter},
+                        {formatter_config, [date, " ", time, " ", message, "\n"]}
+                    ]}
+                ]},
+                {async_threshold, 20},
+                {async_threshold_window, 5}
             ]}
         ]},
 
