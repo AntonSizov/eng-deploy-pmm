@@ -63,7 +63,7 @@
         {max_smpp_connections,      1000},
         {mps_limit,                 10000},
         {pid_file,                  "funnel.pid"},
-        {rotate_tracker_db_at,      {daily, {3, 0, 0}}),  %% local; no dst; false | erlcron:run_when()
+        {rotate_tracker_db_at,      {daily, {3, 0, 0}}},  %% local; no dst; false | erlcron:run_when()
         {feature_31252_enabled,     false}
     ]},
 
@@ -123,7 +123,7 @@
                         {file, "mnp_collisions.log"},
                         {level, info},
                         {size, 50000000},
-                        {date, "$D0"},
+                        {date, ""}, %% time rotation disabled
                         {count, 7},
                         {formatter, lager_default_formatter},
                         {formatter_config, [date, " ", time, " ", message, "\n"]}
@@ -152,7 +152,7 @@
                         {file, "blacklisted.log"},
                         {level, info},
                         {size, 50000000},
-                        {date, "$D0"},
+                        {date, ""}, %% time rotation disabled
                         {count, 7},
                         {formatter, lager_default_formatter},
                         {formatter_config, [date, " ", time, " ", message, "\n"]}
