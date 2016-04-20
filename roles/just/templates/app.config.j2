@@ -217,9 +217,9 @@
                         {level, info},
                         {size, 10000000},
                         {date, ""}, %% time rotation disabled
-                        {count, 3},
+                        {count, 5},
                         {formatter, lager_default_formatter},
-                        {formatter_config, [date, " ", time, " ", message, "\n"]}
+                        {formatter_config, [{j_short_date, [date, " ", time]}, " ", message, "\n"]}
                     ]}
                 ]},
                 {async_threshold, 20},
@@ -232,9 +232,9 @@
                         {level, info},
                         {size, 10000000},
                         {date, ""}, %% time rotation disabled
-                        {count, 3},
+                        {count, 5},
                         {formatter, lager_default_formatter},
-                        {formatter_config, [date, " ", time, " ", message, "\n"]}
+                        {formatter_config, [{j_short_date, [date, " ", time]}, " ", message, "\n"]}
                     ]}
                 ]},
                 {async_threshold, 20},
@@ -247,9 +247,9 @@
                         {level, info},
                         {size, 10000000},
                         {date, ""}, %% time rotation disabled
-                        {count, 3},
+                        {count, 5},
                         {formatter, lager_default_formatter},
-                        {formatter_config, [date, " ", time, " ", message, "\n"]}
+                        {formatter_config, [{j_short_date, [date, " ", time]}, " ", message, "\n"]}
                     ]}
                 ]},
                 {async_threshold, 20},
