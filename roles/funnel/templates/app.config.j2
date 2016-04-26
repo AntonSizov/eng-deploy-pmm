@@ -68,6 +68,20 @@
         {feature_31252_enabled,     false}
     ]},
 
+    %% only for ZainSA
+    {erlcron, [
+        {crontab, [
+            {{daily, {00, 30, 0}}, {fun_mnp_reloader, reload, []}},
+            {{daily, {03, 30, 0}}, {fun_mnp_reloader, reload, []}},
+            {{daily, {06, 30, 0}}, {fun_mnp_reloader, reload, []}},
+            {{daily, {09, 30, 0}}, {fun_mnp_reloader, reload, []}},
+            {{daily, {12, 30, 0}}, {fun_mnp_reloader, reload, []}},
+            {{daily, {15, 30, 0}}, {fun_mnp_reloader, reload, []}},
+            {{daily, {18, 30, 0}}, {fun_mnp_reloader, reload, []}},
+            {{daily, {21, 30, 0}}, {fun_mnp_reloader, reload, []}}
+        ]}
+    ]},
+
     %%
     %%  used up to v3.2.18
     %%
