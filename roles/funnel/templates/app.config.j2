@@ -66,7 +66,8 @@
         {rotate_tracker_db_at,      {daily, {3, 0, 0}}},  %% local; no dst; false | erlcron:run_when()
         {reload_mnp_at,             {daily, {3, 5, 0}}},  %% local; no dst; false | erlcron:run_when()
         {feature_31252_enabled,     false},
-        {multipart_segments_limit,  255}
+        {multipart_segments_limit,  255},
+        {reject_reserved_dcs,       false}
     ]},
 
     %% only for ZainSA
