@@ -3,5 +3,7 @@
   hosts: all
   sudo: true
   roles:
-  - {role: funnel,       tags: ["funnel"],   when: service_version is defined}
-  - {role: just,         tags: ["just"],     when: service_version is defined}
+  - {role: eng,             tags: ["eng"]}
+  - {role: standalone_j3,   tags: ["standalone_j3"]}
+  - {role: funnel,          tags: ["funnel"],          when: service_version is defined}
+  - {role: just,            tags: ["just"],            when: service_version is defined}

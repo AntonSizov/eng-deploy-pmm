@@ -1,0 +1,91 @@
+---
+
+- name: Install utils
+  yum: name={{ item }} state=present
+  with_items:
+    - screen
+    - htop
+    - xz
+    - https://packages.erlang-solutions.com/erlang/esl-erlang/FLAVOUR_1_general/esl-erlang_16.b.3-1~centos~6_amd64.rpm
+
+- name: Create BMS user
+  user: name=bms state=present
+
+- name: Create j3 fake data dir
+  file: path={{just_data_dir}} state=directory owner=bms group=bms mode=0755
+  file: path={{just_data_dir}}/snmp state=directory owner=bms group=bms mode=0755
+
+
+- name: Check whether RabbitMQ installed
+  stat: path=/opt/rabbitmq_server-3.6.1
+  register: rmq
+  changed_when: false
+
+- name: Download RabbitMQ release
+  get_url:
+    url=https://github.com/rabbitmq/rabbitmq-server/releases/download/rabbitmq_v3_6_1/rabbitmq-server-generic-unix-3.6.1.tar.xz
+    dest=/tmp/
+  when: not rmq.stat.exists
+
+- name: Unpack RabbitMQ release
+  unarchive: src=/tmp/rabbitmq-server-generic-unix-3.6.1.tar.xz
+             dest=/opt/
+             copy=false
+             owner=root
+             group=root
+  when: not rmq.stat.exists
+
+
+
+- name: Check whether RMQ tool installed
+  stat: path=/usr/bin/rmq_tool-2.0.2
+  register: rmq_tool
+  changed_when: false
+
+- name: Download RMQ tool
+  get_url:
+    url=https://github.com/AntonSizov/rmq_tool/releases/download/2.0.2/rmq_tool
+    dest=/usr/bin/rmq_tool-2.0.2
+    mode="u=rwx,g=rx,o=rx"
+  when: not rmq_tool.stat.exists
+
+- name: Create symlink to rmq_tool
+  file: state=link src=/usr/bin/rmq_tool-2.0.2 dest=/usr/bin/rmq_tool
+
+
+
+- name: Check whether smppload installed
+  stat: path=/usr/bin/smppload-2.4.0
+  register: smppload
+  changed_when: false
+
+- name: Upload smppload
+  copy: src=../smppload-2.4.0 dest=/usr/bin/smppload-2.4.0 mode="u=rwx,g=rx,o=rx"
+  when: not smppload.stat.exists
+
+- name: Create symlink to smppload
+  file: state=link src=/usr/bin/smppload-2.4.0 dest=/usr/bin/smppload
+
+
+
+- name: Check whether smppsink installed
+  stat: path=/opt/smppsink-1.4.0
+  register: smppsink
+  changed_when: false
+
+- name: Download smppsink
+  get_url:
+    url=http://sus.dev1team.net/sus/poweralley/smppsink-1.4.0-centos6.x86_64.tar.gz
+    dest=/tmp
+    url_username={{ lookup('env','SUS_USERNAME') }}
+    url_password={{ lookup('env','SUS_PASSWORD') }}
+  when: not smppsink.stat.exists
+
+- name: Unarchive smppsink
+  unarchive: src=/tmp/smppsink-1.4.0-centos6.x86_64.tar.gz
+             dest=/opt/
+             copy=false
+  when: not smppsink.stat.exists
+
+- name: Create symlink to smppsink
+  file: state=link src=/opt/smppsink-1.4.0 dest=/opt/smppsink

@@ -1,0 +1,17 @@
+---
+
+- name: Upload smppsim config
+  copy:
+    src=../smppsink.sys.config
+    dest=/opt/smppsink/releases/1/sys.config
+    owner=bms
+    group=bms
+    mode="u=rw,g=r,o=r"
+
+- name: Upload J3 config
+  copy:
+    src=../odbc.2.dump
+    dest=/opt/just/data/
+    owner=bms
+    group=bms
+    mode="u=rw,g=r,o=r"

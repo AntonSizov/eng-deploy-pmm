@@ -59,3 +59,43 @@ $ echo -e "SUS_USERNAME=<name>\nSUS_PASSWORD=<pass>" > credentials
 You can also setup script to ask ssh password:
 $ echo "ASK_PASSWORD=-k" >> credentials
 ```
+
+### Deploy standalone J3 for performance tests
+
+To start you need configure you public key within host you
+need to provision.
+
+To test scripts you can use Vagrantfile provided.
+Run `vagrant up && vagrant ssh` and you are in. Add you public key to
+`.ssh/authorized_keys`, take port number from vagrant startup
+log messages and you are ready.
+
+Start provisioning:
+
+```bash
+./deploy <user>@<host>:<port> standalone_j3 issue_31315
+```
+
+#### Start RabbitMQ
+
+From root user:
+
+```bash
+[root@localhost]# /opt/rabbitmq_server-3.6.1/sbin/rabbitmq-server
+```
+
+#### Start Smppsink
+
+From root user:
+
+```bash
+[root@localhost]# /opt/smppsink/bin/smppsink console
+```
+
+#### Start J3
+
+From bms user:
+
+```bash
+[bms@localhost]$ /opt/just/bin/just console
+```

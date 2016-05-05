@@ -1,0 +1,65 @@
+%% -type type() ->
+%% 1 -> j_smpp_client_gtw; % smpp client gateway.
+%% 2 -> j_smpp_server_gtw; % smpp server node.
+%% 3 -> reserved;          % reserved for cimd client gateway.
+%% 4 -> j_cimd_server_gtw; % cimd server gateway.
+%% 5 -> j_mm7_client_gtw;  % mm7 client gateway.
+%% 6 -> j_ussd_http_client_gtw % ussd http tango ao client gateway
+
+%% throttle_alias() -> null | uuid().
+
+[{uuid,"be24e092-dba6-df11-8053-000c29ce5d9b"},
+ {specs,[
+         [{settings,[{default_encoding,"latin1"},
+                     {default_bitness,"7"},
+                     {convert_receipt_msgid,"false"},
+                     {address_range,""},
+                     {concurrent_requests,"260"},
+                     %% "Type1;Addr1;Port1;SystemId1;Password1/Type2;..."
+                     {connections,"transceiver;127.0.0.1;2775;test;test"},
+                     {enabled,"true"},
+                     {enquire_link_time,"60"},
+                     {fast_retry_delay,"300"},
+                     {fast_retry_times,"0"},
+                     {fatal_errors,"00000077,00000440,0000000A,0000000B,000000FF,00000001,00000014"},
+                     {ignored_errors,"00000058"},
+                     {inactivity_time,"0"},
+                     {interface_version,"34"},
+                     {log_level,"debug"},
+                     {log_smpp_pdus,"true"},
+                     {multipart_method,"sar"},
+                     {priority_flag,"1"},
+                     {reconnect_delay,"10"},
+                     {response_time,"60"},
+                     {slow_retry_delay,"300"},
+                     {slow_retry_times,"3"},
+                     {system_type,"smpp"},
+                     {window_size,"400"},
+                     {dest_addr_ton,"1"},
+                     {dest_addr_npi,"1"},
+                     {default_data_coding,"0"},
+                     {max_validity_period_hours,"48"},
+                     {override_validity_period_hours,"0"},
+                     {queue_resp,""},
+                     {queue_dlr,""},
+                     {default_incoming_encoding,"gsm0338"}]},
+          {gateway_id,"a285681f-d336-e011-ad83-d8d385bcc314"},
+          {type,1},
+          {throttle_alias,null}]
+ ]},
+ {rules,[
+    [{type,sms},
+    {id,"3b073e20-0eed-431c-9364-b7c069950b50"},
+    {alias,"ExampleTestRuleAlias"},
+    {time_from,0},
+    {time_to,1439},
+    {day_of_week,2},
+    {date_from,null},
+    {date_to,null},
+    {rps,-1}]
+ ]},
+ {customers,[
+    [{id,"7cba2400-fff7-4651-981c-56fce3103c53"},
+    {sms_ruleset_id,null},
+    {mms_ruleset_id,null}]
+ ]}].

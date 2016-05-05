@@ -43,6 +43,7 @@ declare -a services
 services=(
     funnel
     just
+    standalone_j3
 )
 
 function print_help {
@@ -82,10 +83,11 @@ service_name=$2
 version=$3
 
 containsElement "$host_name" "${hosts[@]}"
-if [[ $(echo $?) == "1" ]]; then
-    printf "\e[1;33m[ERR] Unknown host: $host_name\e[0m\n"
-    print_help
-    exit 1
+if [[ $(echo $?) == "0" ]]; then
+    host_name=$(dirname $0)/inventories/${host_name}
+else
+    host_name=${host_name},
+    printf "\e[1;33m[WARN] Unknown host: $host_name\e[0m\n"
 fi
 
 containsElement "$service_name" "${services[@]}"
@@ -107,4 +109,5 @@ fi
 # ansible all -i inventories/${host_name} -m ping || exit 1
 export SUS_PASSWORD
 export SUS_USERNAME
-ansible-playbook ${ASK_PASSWORD} ${DEPLOY_YML} -i $(dirname $0)/inventories/${host_name} --tags ${service_name} ${service_version} || exit 1
+# ansible-playbook ${ASK_PASSWORD} ${DEPLOY_YML} -i ${host_name} --tags "eng, ${service_name}" ${service_version} || exit 1
+ansible-playbook ${ASK_PASSWORD} ${DEPLOY_YML} -i ${host_name} --tags ${service_name} ${service_version} || exit 1
