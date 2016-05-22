@@ -94,7 +94,12 @@
         {mr_id_status_db_gc_interval, 7200000},   % 2h, milliseconds
         {mr_id_status_db_stopped_ttl, 86400000},   % 1 day, milliseconds
 
-        {pid_file, "just.pid"}
+        {pid_file, "just.pid"},
+
+        %% v3.8.x and above
+        {control_queue,     <<"pmm.just.control">>},
+        {mr_id_state_queue, <<"pmm.just.mr_id_state">>},
+        {instances_number,  1}
     ]},
 
 
