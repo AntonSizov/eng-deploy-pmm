@@ -145,6 +145,21 @@
                 {async_threshold, 20},
                 {async_threshold_window, 5}
             ]},
+            {fun_error_rsp_log_lager_event, [
+                {handlers, [
+                    {lager_file_backend, [
+                        {file, "ec_smpp_resp.log"},
+                        {level, info},
+                        {size, 50000000},
+                        {date, ""}, %% time rotation disabled
+                        {count, 7},
+                        {formatter, lager_default_formatter},
+                        {formatter_config, [date, " ", time, " ", message, "\n"]}
+                    ]}
+                ]},
+                {async_threshold, 20},
+                {async_threshold_window, 5}
+            ]},
             {fun_migrations_logger_lager_event, [
                 {handlers, [
                     {lager_file_backend, [
