@@ -11,9 +11,8 @@
         {amqp_port,             {{rabbitmq_port}}},
         {amqp_virtual_host,     <<"/">>},
 
-        %%
-        %%  used up to v3.2.18
-        %%
+{% if service_version | version_compare('3.3.0', '<') %}
+        %%  used up to v3.3.0
         {queue_backend_auth,        <<"pmm.mmwl.funnel_auth">>},
         {queue_backend_config,      <<"pmm.mmwl.funnel_config">>},
         {queue_backend_events,      <<"pmm.mmwl.funnel_events">>},
@@ -28,19 +27,19 @@
         {queue_mnp_updates,         <<"pmm.mmwl.funnel_mnp_changes">>},
         {queue_extra_content,       <<"pmm.mmwl.funnel_extra_content">>},
         {queue_delivery_pattern,    <<"pmm.funnel.dlr.%uidx%">>},
-        %%
-        %%  used up to v3.2.18 (end)
-        %%
+        %%  used up to v3.3.0 (end)
+{% endif %}
 
         % mnp settings
-        {mnp,                       {{mnp_state}}},   %% deprecated
-        {mnp_enabled,               {{mnp_enabled}}}, %% appeared in v3.5.x
+{% if service_version | version_compare('3.5.1', '>=') %}
+        {mnp_enabled,               {{mnp_enabled}} },
+{% else %}
+        {mnp,                       {{mnp_state}} },
+{% endif %}
         {mnp_home_network_id,       "{{mnp_home_network_id}}"}, %% substitute with real Home NetworkId
 
-        %%
-        %%  used up to v3.5.x
-        %%
-
+{% if service_version | version_compare('3.5.0', '<') %}
+        % used up to v3.5.x
         % mnp storage settings
         {mnp_storage_compression,   none},
         {mnp_storage_cache_size,    1000000},
@@ -53,24 +52,33 @@
         %% 3. then you can remove converted cache, when MMWL will be deployed and Funnel
         %% start operate as usual
         %% {convert_cache, true},
-
-        %%
-        %%  used up to v3.5.x (end)
-        %%
+        % used up to v3.5.x (end)
+{% endif %}
 
         %% appeared in v3.5.x
+{% if service_version | version_compare('3.5.0', '>=') %}
         {smpp_log_fmt_version,      2},
         {max_smpp_connections,      1000},
         {mps_limit,                 10000},
         {pid_file,                  "funnel.pid"},
         {rotate_tracker_db_at,      {daily, {3, 0, 0}}},  %% local; no dst; false | erlcron:run_when()
         {reload_mnp_at,             false},               %% local; no dst; false | erlcron:run_when()
+{% endif %}
+
+{% if service_version | version_compare('3.5.0', '>=') and service_version | version_compare('3.6.0', '<') %}
         {feature_31252_enabled,     false},
+{% endif %}
+
+{% if service_version | version_compare('3.6.0', '>=') %}
         {multipart_segments_limit,  255},
-        {reject_reserved_dcs,       false}
+        {reject_reserved_dcs,       false},
+        {bypass_ton12_validation,   false}, %% alias for feature_31252_enabled key
+{% endif %}
+
+        {config_structure_stub,     ignore_me}
     ]},
 
-    {% if mnp_cron is defined and mnp_cron %}
+{% if mnp_cron is defined and mnp_cron %}
     %% only for ZainSA
     {erlcron, [
         {crontab, [
@@ -78,14 +86,13 @@
             { {daily, {12, 45, 0} }, {fun_mnp_reloader, reload, []} }
         ]}
     ]},
-    {% endif %}
+{% endif %}
 
-    %%
-    %%  used up to v3.2.18
-    %%
+{% if service_version | version_compare('3.3.0', '<') %}
+    %% used up to v3.3.0
     %% SASL config
     {sasl, [
-        {sasl_error_logger,        {file, "log/sasl-error.log"}},
+        {sasl_error_logger,        {file, "log/sasl-error.log"} },
         {errlog_type,              error}
     ]},
     %% riak_err config
@@ -93,9 +100,8 @@
         {term_max_size, 10240}, % size limit of args combined
         {fmt_max_bytes, 10240}  % size limit of a formatted term
     ]},
-    %%
-    %% used up to v3.2.18 (end)
-    %%
+    %% used up to v3.3.0 (end)
+{% endif %}
 
     %% SNMP config
     {snmp, [
