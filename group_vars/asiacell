@@ -17,3 +17,43 @@ just_instance: BMSENG1
 just_odbc_dsn: 'DSN=mmwl'
 
 just_smpp_server_port: 2776
+
+
+fun_smpp_enable_tcp:           'true'
+fun_smpp_server_addr:          '{0, 0, 0, 0}'
+fun_smpp_server_port:          8001
+fun_smpp_ssl_enable:           'false'
+fun_smpp_ssl_server_addr:      '{0, 0, 0, 0}'
+fun_smpp_ssl_server_port:      2774
+fun_smpp_ssl_certfile:         "priv/server.crt"
+fun_smpp_ssl_keyfile:          "priv/server.key"
+fun_smpp_ssl_cacertfile:       "priv/ca.crt"
+fun_smpp_ssl_enable_sslv3:     'true'
+fun_smpp_ssl_enable_tlsv1:     'true'
+fun_smpp_ssl_enable_tlsv11:    'true'
+fun_smpp_ssl_enable_tlsv12:    'true'
+fun_smpp_server_system_id:     "Asiacell-SMPP"
+fun_session_init_time:         5000
+fun_enquire_link_time:         60000
+fun_inactivity_time:           infinity
+fun_response_time:             60000
+fun_batch_max_size:            2000
+fun_batch_max_wait:            1000
+fun_extra_content_max_wait:    1200
+fun_log_smpp_pdus:             'true'
+fun_strip_leading_zero:        'false'
+fun_country_code:              "974"
+fun_use_blacklists:            'true'
+fun_bulk_threshold:            100
+fun_reject_source_ton_npi:     'false'
+fun_correct_source_ton_npi:    'false'
+fun_concat_max_wait:           60000
+fun_cutoff_validity_period:    'false'
+fun_deliver_sm_window_size:    20
+fun_throttle_group_seconds:    3
+fun_backend_response_time:     1000
+fun_max_stop_time:             120000
+fun_correct_service_type:      'false'
+fun_reject_service_type:       'false'
+fun_default_service_type:      ""
+fun_valid_service_types_regex: ".*"
