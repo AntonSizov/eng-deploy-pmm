@@ -36,6 +36,7 @@ hosts=(
     batelco-stg
     qtel-stg
     asiacell-stg
+    asiacell-pp
     pmmv6-stg
 )
 
