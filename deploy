@@ -26,7 +26,7 @@ USER=$(whoami)
 if [[ "$USER" == "root" ]]; then
     DOCKER_BASE="/etc/ansible/playbooks/eng-deploy-pmm"
     DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-    if [[ "$(dirname ${DIR})" == DOCKER_BASE ]]; then
+    if [[ "$(dirname ${DIR})" == "$DOCKER_BASE" ]]; then
         USER=$(basename ${DIR})
     else
         USER="unknown"
