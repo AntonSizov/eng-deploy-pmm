@@ -6,7 +6,17 @@
     - screen
     - htop
     - xz
-    - https://packages.erlang-solutions.com/erlang/esl-erlang/FLAVOUR_1_general/esl-erlang_16.b.3-1~centos~6_amd64.rpm
+
+- name: Check if esl-erlang1.x86_64 is installed
+  shell: rpm -q esl-erlang.x86_64 || true
+  register: erlang_rpm_check
+  changed_when: false
+
+- name: Install ESL Erlang
+  yum:
+    name=https://packages.erlang-solutions.com/erlang/esl-erlang/FLAVOUR_1_general/esl-erlang_16.b.3-1~centos~6_amd64.rpm
+    state=present
+  when: erlang_rpm_check.stdout.find('is not installed') != -1
 
 - name: Create BMS user
   user: name=bms state=present
