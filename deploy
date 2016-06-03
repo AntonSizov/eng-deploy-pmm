@@ -129,4 +129,4 @@ export SUS_PASSWORD
 export SUS_USERNAME
 ansible-playbook ${ASK_PASSWORD} ${DEPLOY_YML} -i ${host_name} \
                  --tags ${service_name} \
-                 --extra-vars "{\"service_version\":\"${version}\",\"info_string\":\"${INFO_STRING}\"}" || exit 1
+                 --extra-vars "{\"service_version\":\"${version}\",\"info_string\":\"${INFO_STRING}\",\"commit_hash\":\"${COMMIT_HASH}\"}" || exit 1
