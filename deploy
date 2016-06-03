@@ -20,6 +20,19 @@ if [ -f ${CREDENTIALS} ];then
     . ${CREDENTIALS}
 fi
 
+COMMIT_HASH=$(git log -1 | head -1 | awk '{print $2}' | cut -c 1-7)
+
+USER=$(whoami)
+if [[ "$USER" == "root" ]]; then
+    DOCKER_BASE="/etc/ansible/playbooks/eng-deploy-pmm"
+    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    if [[ "$(dirname ${DIR})" == DOCKER_BASE ]]; then
+        USER=$(basename ${DIR})
+    else
+        USER="unknown"
+    fi
+fi
+
 containsElement () {
     local e
     for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
@@ -103,17 +116,17 @@ if [[ $(echo $?) == "1" ]]; then
     exit 1
 fi
 
-service_version=''
 if [[ -z $version ]]; then
     printf "\e[1;33m[ERR] Missed service version\e[0m\n"
     print_help
     exit 1
-else
-    service_version="--extra-vars service_version=${version}"
 fi
+
+INFO_STRING="${USER} $(date '+%Y-%m-%d %H:%M:%S') ${COMMIT_HASH} ${service_name} ${version}"
 
 # ansible all -i inventories/${host_name} -m ping || exit 1
 export SUS_PASSWORD
 export SUS_USERNAME
-# ansible-playbook ${ASK_PASSWORD} ${DEPLOY_YML} -i ${host_name} --tags "eng, ${service_name}" ${service_version} || exit 1
-ansible-playbook ${ASK_PASSWORD} ${DEPLOY_YML} -i ${host_name} --tags ${service_name} ${service_version} || exit 1
+ansible-playbook ${ASK_PASSWORD} ${DEPLOY_YML} -i ${host_name} \
+                 --tags ${service_name} \
+                 --extra-vars "{\"service_version\":\"${version}\",\"info_string\":\"${INFO_STRING}\"}" || exit 1

@@ -3,6 +3,13 @@
 - name: Show svc name and its version to deploy
   debug: msg="Start deploy svc {{ svc_name }} v{{ version }}"
 
+- name: Show info_string variable value
+  debug: msg="Debug info_string = {{ info_string }}"
+
+
+- name: Log deploy event to /opt/ansible_log
+  shell: echo {{ info_string }} >> /opt/ansible_log
+
 # stop svc
 
 - name: Get svc pid
