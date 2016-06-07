@@ -51,6 +51,9 @@
   with_items:
     - rabbitmq-server
     - rabbitmqctl
+    - rabbitmq-env
+    - rabbitmq-plugins
+    - rabbitmq-defaults
 
 
 - name: Check whether RMQ tool installed
