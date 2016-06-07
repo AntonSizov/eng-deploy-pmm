@@ -6,6 +6,7 @@
     - screen
     - htop
     - xz
+    - emacs
 
 - name: Check if esl-erlang1.x86_64 is installed
   shell: rpm -q esl-erlang.x86_64 || true
@@ -21,7 +22,7 @@
 - name: Create BMS user
   user: name=bms state=present
 
-- name: Create j3 fake data dir
+- name: Create j3 fake drbd data dir
   file: path={{just_data_dir}} state=directory owner=bms group=bms mode=0755
   file: path={{just_data_dir}}/snmp state=directory owner=bms group=bms mode=0755
 
@@ -45,6 +46,11 @@
              group=root
   when: not rmq.stat.exists
 
+- name: Create symlink to rabbitmq files
+  file: state=link src=/opt/rabbitmq_server-3.6.1/sbin/{{ item }} dest=/usr/bin/{{ item }}
+  with_items:
+    - rabbitmq-server
+    - rabbitmqctl
 
 
 - name: Check whether RMQ tool installed

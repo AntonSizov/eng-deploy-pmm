@@ -58,6 +58,7 @@ services=(
     funnel
     just
     standalone_j3
+    eng
 )
 
 function print_help {
@@ -75,8 +76,11 @@ function print_help {
     echo ""
     echo "To deploy standalone version of Just:"
     echo "$ ./deploy <user>@<host>:<port> standalone_j3 <JustVersion>"
-    echo "Currently only Just version 3.8.0-devel-1 supports"
-    echo "standalone mode"
+    echo "Just should have version 3.8.0-devel-1 or higher"
+    echo "for standalone mode"
+    echo ""
+    echo "To install erlang, rabbitmq, smppload, smppsim and rmq_tool:"
+    echo "$ ./deploy <user>@<host>:<port> eng ignore_version"
 }
 
 if [[ "$SUS_USERNAME" == "" ]];then
