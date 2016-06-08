@@ -48,6 +48,13 @@
              group=root
   when: not rmq.stat.exists
 
+- name: Allow guest to connect from remote hosts
+  copy:
+    src=../rabbitmq.config
+    dest=/opt/rabbitmq_server-3.6.1/etc/rabbitmq/rabbitmq.config
+    owner=root
+    group=root
+
 - name: Create symlink to rabbitmq files
   file: state=link src=/opt/rabbitmq_server-3.6.1/sbin/{{ item }} dest=/usr/bin/{{ item }}
   with_items:
