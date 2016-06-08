@@ -7,6 +7,9 @@
     - htop
     - xz
     - emacs
+    - mail
+    - nano
+    - bc
 
 - name: Check if esl-erlang1.x86_64 is installed
   shell: rpm -q esl-erlang.x86_64 || true
@@ -108,3 +111,16 @@
 
 - name: Create symlink to smppsink
   file: state=link src=/opt/smppsink-1.4.0 dest=/opt/smppsink
+
+
+- name: Copy test and stat scripts (should be moved out of root and eng role)
+  copy:
+    src=../{{ item }}
+    dest=/root/{{ item }}
+    mode="u=rwx,g=,o="
+    # user=root
+    # group=root
+  with_items:
+    - checkresp.sh
+    - kpi_j.sh
+    - lonelyjust.sh
