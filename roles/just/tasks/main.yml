@@ -7,11 +7,19 @@
       version: "{{service_version}}"
       data_dir: "{{just_data_dir}}"
       svc_name: "{{just_svc_name}}"
+  when: not only_eng_config
 
 - name: Provision config
   template: src=app.config.j2
             dest=/opt/just-full-{{service_version}}/etc/app.config
+  when: not only_eng_config
 
 - name: Provision config original
   template: src=app.config.j2
             dest=/opt/just-full-{{service_version}}/etc/app.config.original
+  when: not only_eng_config
+
+- name: Provision local config
+  template: src=app.config.j2
+            dest=/tmp/just-full-{{service_version}}-{{commit_hash}}-app.config
+  when: only_eng_config

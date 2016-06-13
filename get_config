@@ -1,0 +1,44 @@
+#!/bin/bash
+
+function print_help() {
+    echo "./get_config <HOST> <SERVICE> <VERSION> <CONFIG_HASH>"
+    echo "SERVICE: `just` or `funnel`"
+    echo "HOST: $(ls -1 group_vars/ | grep -v all)"
+    echo "Example:"
+    echo "./get_config zain-sa-stg funnel 3.5.9 1a2b3c4"
+}
+
+HOST=$1
+SERVICE=$2
+VERSION=$3
+HASH=$4
+
+if [[ "${HOST}" == "" ]]; then
+    echo HOST is undefined
+    print_help
+    exit 1
+fi
+
+if [[ "${SERVICE}" == "" ]]; then
+    echo SERVICE is undefined
+    print_help
+    exit 1
+fi
+
+if [[ "${VERSION}" == "" ]]; then
+    echo VERSION is undefined
+    print_help
+    exit 1
+fi
+
+if [[ "${HASH}" == "" ]]; then
+    echo HASH is undefined
+    print_help
+    exit 1
+fi
+
+git checkout ${HASH} &> /dev/null || (echo Git checkout ERROR && exit 1)
+echo Got necessary commit OK
+./deploy ${HOST} ${SERVICE} ${VERSION} only_config
+git checkout master &> /dev/null
+echo All done, get you config at /tmp/

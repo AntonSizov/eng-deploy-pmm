@@ -1,7 +1,6 @@
 ---
 - name: Deploy Funnel/J3 services
   hosts: all
-  sudo: true
   roles:
   - {role: eng,             tags: ["eng"]}
   - {role: standalone_j3,   tags: ["standalone_j3"]}
