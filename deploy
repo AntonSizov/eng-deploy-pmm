@@ -1,12 +1,19 @@
 #!/bin/bash
 
+ONLY_ENG_CONFIG=$4
+if [[ "${ONLY_ENG_CONFIG}" == "" ]]; then
+    ONLY_ENG_CONFIG="false"
+else
+    ONLY_ENG_CONFIG="true"
+fi
+
 VERSION_FILE=$(dirname $0)/version
 DEPLOY_YML=$(dirname $0)/deploy.yml
 CREDENTIALS=$(dirname $0)/credentials
 CURRENT_VERSION=$(cat ${VERSION_FILE})
 LAST_VERSION=$(curl -H 'Cache-Control:max-age=0' -s https://raw.githubusercontent.com/AntonSizov/eng-deploy-pmm/master/version)
 
-if [[ "$CURRENT_VERSION" -lt "$LAST_VERSION" ]]; then
+if [[ ("${ONLY_ENG_CONFIG}" == "true") && ("$CURRENT_VERSION" -lt "$LAST_VERSION") ]]; then
     echo "You version of script is outdated, please update it:"
     echo
     echo "$ git pull origin master"
@@ -107,7 +114,6 @@ fi
 host_name=$1
 service_name=$2
 version=$3
-ONLY_ENG_CONFIG=$4
 
 containsElement "$host_name" "${hosts[@]}"
 if [[ $(echo $?) == "0" ]]; then
@@ -131,13 +137,6 @@ if [[ -z $version ]]; then
 fi
 
 INFO_STRING="${USER} $(date '+%Y-%m-%d %H:%M:%S') ${COMMIT_HASH} ${service_name} ${version}"
-
-if [[ "${ONLY_ENG_CONFIG}" == "" ]]; then
-    ONLY_ENG_CONFIG="false"
-else
-    ONLY_ENG_CONFIG="true"
-fi
-
 
 # ansible all -i inventories/${host_name} -m ping || exit 1
 export SUS_PASSWORD

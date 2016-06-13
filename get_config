@@ -2,8 +2,8 @@
 
 function print_help() {
     echo "./get_config <HOST> <SERVICE> <VERSION> <CONFIG_HASH>"
-    echo "SERVICE: `just` or `funnel`"
-    echo "HOST: $(ls -1 group_vars/ | grep -v all)"
+    echo "SERVICE: just or funnel"
+    echo "HOST: $(ls -1 inventories/ | grep -v all | xargs)"
     echo "Example:"
     echo "./get_config zain-sa-stg funnel 3.5.9 1a2b3c4"
 }
@@ -37,8 +37,8 @@ if [[ "${HASH}" == "" ]]; then
     exit 1
 fi
 
-git checkout ${HASH} &> /dev/null || (echo Git checkout ERROR && exit 1)
+git checkout ${HASH} &> /dev/null || { echo Git checkout ERROR ; exit 1; }
 echo Got necessary commit OK
-./deploy ${HOST} ${SERVICE} ${VERSION} only_config
+./deploy ${HOST} ${SERVICE} ${VERSION} only_config || { echo Error ; git checkout master &> /dev/null; exit 1; }
 git checkout master &> /dev/null
 echo All done, get you config at /tmp/
