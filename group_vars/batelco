@@ -17,6 +17,7 @@ just_instance: BMSENG1
 just_odbc_dsn: 'DSN=pmm_bat_mmwl'
 
 just_smpp_server_port: 2779
+just_replies_deadline: 120
 
 fun_smpp_server_addr:          '{0, 0, 0, 0}'
 fun_smpp_server_port:          2775
