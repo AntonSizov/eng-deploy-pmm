@@ -129,4 +129,3 @@
   with_items:
     - checkresp.sh
     - kpi_j.sh
-    - lonelyjust.sh

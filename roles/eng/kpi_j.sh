@@ -7,4 +7,4 @@ THRPMEMCPU=$(join -j 2 -o 1.1,1.2,1.3,1.4,1.5,1.6,2.3,2.4,2.5,2.6 <(echo "$THRPM
 
 echo "date time rpsin rpsout memtotMB memallMB CPU%
 $THRPMEMCPU
-" | column -t
+"
