@@ -26,3 +26,5 @@ just_data_dir: /mnt/fs-j3/just-data
 just_instance: BMSENG1
 just_odbc_dsn: 'DSN=mmwl'
 just_smpp_server_port: 2776
+
+just_replies_deadline: 120

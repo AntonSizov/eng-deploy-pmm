@@ -22,4 +22,5 @@
 - name: Provision local config
   template: src=app.config.j2
             dest=/tmp/just-full-{{service_version}}-{{commit_hash}}-app.config
+  delegate_to: localhost
   when: only_eng_config
