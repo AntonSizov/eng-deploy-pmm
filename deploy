@@ -65,6 +65,7 @@ services=(
     funnel
     just
     standalone_j3
+    standalone_fun
     eng
 )
 

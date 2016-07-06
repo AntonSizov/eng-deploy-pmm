@@ -43,7 +43,7 @@
         {replies_deadline, {{just_replies_deadline}}},
 
 {% if service_version | version_compare('3.8.0', '>=') %}
-        {max_pdu_slots_per_gtw_queue, {{max_pdu_slots_per_gtw_queue}} },
+        {max_pdu_slots_per_gtw_queue, {{just_max_pdu_slots_per_gtw_queue}} },
 {% endif %}
 
         {smtp_server_addr, {0,0,0,0}},

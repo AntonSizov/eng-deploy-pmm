@@ -1,0 +1,9 @@
+---
+
+- name: Upload Funnel fake auth cache
+  copy:
+    src=../funnel.fake.cache
+    dest=/opt/funnel/data/
+    owner=bms
+    group=bms
+    mode="u=rw,g=r,o=r"

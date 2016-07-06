@@ -98,7 +98,7 @@
         {log_smpp_pdus,             {{fun_log_smpp_pdus}}},
         {strip_leading_zero,        {{fun_strip_leading_zero}}},
         {country_code,              "{{fun_country_code}}"},
-        {use_blacklists,            "{{fun_use_blacklists}}"},
+        {use_blacklists,            {{fun_use_blacklists}}},
         {bulk_threshold,            {{fun_bulk_threshold}}},
         {reject_source_ton_npi,     {{fun_reject_source_ton_npi}}},
         {correct_source_ton_npi,    {{fun_correct_source_ton_npi}}},
@@ -112,6 +112,10 @@
         {reject_service_type,       {{fun_reject_service_type}}},
         {default_service_type,      "{{fun_default_service_type}}"},
         {valid_service_types_regex, "{{fun_valid_service_types_regex}}"},
+        {bw_list_resp_timeout,      {{fun_bw_list_resp_timeout}}},
+        {ignore_bw_list_resp_timeout,{{fun_ignore_bw_list_resp_timeout}}},
+        {smpp_pdu_log_dir,          "log/smpp"},
+        {file_log_size,             5000000},
 {% endif %}
 
         {config_structure_stub,     ignore_me}

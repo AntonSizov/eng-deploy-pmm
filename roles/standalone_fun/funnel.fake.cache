@@ -1,0 +1,48 @@
+[
+    %% user #1
+    [{user_id, "user_id"},
+    {type, transceiver},
+    {password, "qwe123"},
+    %%
+    {id, "1"},
+    {uuid, "7cba2400-fff7-4651-981c-56fce3103c53"},
+    {priority, 1},
+    {rps, 100},
+    {allowedSources, []},
+    {defaultSource,
+        [{addr, "375259771385"},
+        {ton, 1},
+        {npi, 1}]
+    },
+    {networks, [
+        %% network #1
+        [{id, "2d9a0954-3d06-11e6-b892-6c40089a3456"},
+        {countryCode, "375"},
+        {numbersLen, 12},
+        {prefixes, ["25", "29", "33"]},
+        {providerId, "6b085458-3d06-11e6-8319-6c40089a3456"}]
+    ]},
+    {providers, [
+        % provider #1
+        [{id, "6b085458-3d06-11e6-8319-6c40089a3456"},
+        {gateway, "a285681f-d336-e011-ad83-d8d385bcc314"},
+        {bulkGateway, "a285681f-d336-e011-ad83-d8d385bcc314"},
+        {receiptsSupported, true}]
+    ]},
+    {defaultProviderId, "6b085458-3d06-11e6-8319-6c40089a3456"},
+    {receiptsAllowed, true},
+    {isAdvertiser, false},
+    {blackList, []}, %% not supported
+    {whiteList, []}, %% not supported
+    {noRetry, false},
+    {defaultValidity, "000001000000000R"}, % 1 days
+    {maxValidity, 259200}, % 3 days in seconds
+    {allowPorted, false},
+    {poweradsTransporter, false},
+    {transpAllowedTCP, true},
+    {transpAllowedSSL, true},
+    {maxTXAllowed, 10},
+    {maxRXAllowed, 10},
+    {maxTRXAllowed, 10},
+    {userIdx, 1}]
+].

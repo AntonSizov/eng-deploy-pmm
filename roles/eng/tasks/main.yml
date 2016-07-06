@@ -28,6 +28,10 @@
   file: path={{just_data_dir}} state=directory owner=bms group=bms mode=0755
   file: path={{just_data_dir}}/snmp state=directory owner=bms group=bms mode=0755
 
+- name: Create Funnel fake drbd data dir
+  file: path={{funnel_data_dir}} state=directory owner=bms group=bms mode=0755
+  file: path={{funnel_data_dir}}/snmp state=directory owner=bms group=bms mode=0755
+
 
 - name: Check whether RabbitMQ installed
   stat: path=/opt/rabbitmq_server-3.6.1

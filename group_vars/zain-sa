@@ -58,3 +58,5 @@ fun_correct_service_type:      'true'
 fun_reject_service_type:       'false'
 fun_default_service_type:      ""
 fun_valid_service_types_regex: "^(|CMT|GSM)$"
+fun_bw_list_resp_timeout:      10000
+fun_ignore_bw_list_resp_timeout: 'false'
