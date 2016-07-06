@@ -4,6 +4,10 @@
 [
     %% Just config
     {just, [
+        %% 3.8.0 and above
+        {async_threshold, 20},
+        {async_threshold_window, 5},
+
         {instance, "{{just_instance}}"},
 
         {ussd_single, true},
