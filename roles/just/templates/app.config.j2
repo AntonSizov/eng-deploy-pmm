@@ -6,7 +6,6 @@
     {just, [
         %% 3.8.0 and above
         {async_threshold, 20},
-        {async_threshold_window, 5},
 
         {instance, "{{just_instance}}"},
 
@@ -111,6 +110,12 @@
         {instances_number,  1}
     ]},
 
+    %% 3.8.0 and above
+    {pmm_smpplib, [
+        {file_info_check_rate, 100},
+        {delayed_write_bytes, 1048576},
+        {delayed_write_mseconds, 5000}
+    ]},
 
     %% deprecated (have been used only in 3.6.x)
     {bitcask, [
