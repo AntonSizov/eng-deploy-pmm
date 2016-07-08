@@ -185,12 +185,6 @@
         {errlog_type, error}
     ]},
 
-    %% riak_err config for J3 version < 3.5.0 and >= 3.7.x
-    {riak_err, [
-        {term_max_size, 10240}, % size limit of args combined
-        {fmt_max_bytes, 10240}  % size limit of a formatted term
-    ]},
-
     %% SNMP config
     {snmp, [
         {agent, [
@@ -212,7 +206,16 @@
     {lager, [
         {log_root, "log"},
 
-        {handlers, []},
+        {handlers, [
+            {lager_file_backend, [
+                {file, "info.log"},
+                {level, info},
+                {size, 10000000},
+                {date, ""}, %% time rotation disabled
+                {count, 5},
+                {formatter, lager_default_formatter}
+            ]}
+        ]},
 
         {extra_sinks, [
             {j_migrations_logger_lager_event, [
@@ -290,7 +293,7 @@
         %% current one - default is 0
         {crash_log_count, 7},
         %% Whether to redirect error_logger messages into the default lager_event sink - defaults to true
-        {error_logger_redirect, false},
+        {error_logger_redirect, true},
         %% How many messages per second to allow from error_logger before we start dropping them
         {error_logger_hwm, 50},
         %% How big the gen_event mailbox can get before it is
