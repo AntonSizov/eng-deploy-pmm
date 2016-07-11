@@ -2,6 +2,8 @@
 run_user: bms
 download_dir: /tmp
 
+timezone: 'Europe/Minsk'
+
 rabbitmq_port: 5672
 rabbitmq_username: guest
 rabbitmq_password: guest

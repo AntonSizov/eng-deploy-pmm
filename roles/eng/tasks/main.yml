@@ -1,5 +1,30 @@
 ---
-## install http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+
+- name: Import RPMForge GPG key
+  rpm_key: key=http://apt.sw.be/RPM-GPG-KEY.dag.txt
+           state=present
+
+- name: Install RPMForge repo
+  yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+       state=present
+
+- name: Setup timezone
+  file: src=/usr/share/zoneinfo/{{timezone}}
+        dest=/etc/localtime
+        state=link
+        force=true
+  when: timezone is defined
+
+- name: Install NTP
+  yum: name={{item}} state=present
+  with_items:
+  - ntp
+  - ntpdate
+
+- name: Enable and start NTP service
+  service: name=ntpd
+           enabled=true
+           state=started
 
 - name: Install utils
   yum: name={{ item }} state=present
