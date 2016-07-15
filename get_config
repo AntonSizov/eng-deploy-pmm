@@ -3,9 +3,9 @@
 function print_help() {
     echo "./get_config <HOST> <SERVICE> <VERSION> <CONFIG_HASH>"
     echo "SERVICE: just or funnel"
-    echo "HOST: $(ls -1 inventories/ | grep -v all | xargs)"
+    echo "HOST: $(ls -1 inventories/ | grep conf | xargs)"
     echo "Example:"
-    echo "./get_config zain-sa-stg funnel 3.5.9 1a2b3c4"
+    echo "./get_config zain-sa-conf funnel 3.5.9 1a2b3c4"
 }
 
 HOST=$1

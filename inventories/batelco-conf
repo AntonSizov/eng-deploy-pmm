@@ -1,0 +1,2 @@
+[batelco]
+local ansible_connection=local

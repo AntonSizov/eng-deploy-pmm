@@ -1,0 +1,2 @@
+[zain-sa-m3-eng]
+local ansible_connection=local

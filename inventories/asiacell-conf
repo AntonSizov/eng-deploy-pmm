@@ -1,0 +1,2 @@
+[asiacell]
+local ansible_connection=local

@@ -51,13 +51,19 @@ hosts=(
     zain-sa-m3
     zain-sa-pp
     zain-sa-stg
+    zain-sa-conf
     zain-kw-stg
     zain-kw-pp
+    zain-kw-conf
     batelco-stg
+    batelco-conf
     qtel-stg
+    qtel-conf
     asiacell-stg
     asiacell-pp
+    asiacell-conf
     pmmv6-stg
+    pmmv6-conf
 )
 
 declare -a services
