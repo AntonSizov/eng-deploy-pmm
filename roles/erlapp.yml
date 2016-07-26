@@ -116,6 +116,13 @@
   file: path={{log_dir}}
         state=directory
 
+- name: Create Funnel log/smpp dir
+  file:
+    path={{log_dir}}/smpp
+    state=directory
+  when: name == 'funnel'
+
+
 - name: Move local log dir contents
   shell: cp -r /opt/{{name}}{{name_suffix}}-{{version}}/log/* {{log_dir}}
   when: (not curr_ver_reg.stat.exists) and

@@ -1,12 +1,12 @@
 ---
 
-- name: Import RPMForge GPG key
-  rpm_key: key=http://apt.sw.be/RPM-GPG-KEY.dag.txt
-           state=present
+# - name: Import RPMForge GPG key
+#   rpm_key: key=http://apt.sw.be/RPM-GPG-KEY.dag.txt
+#            state=present
 
-- name: Install RPMForge repo
-  yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
-       state=present
+# - name: Install RPMForge repo
+#   yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+#        state=present
 
 - name: Setup timezone
   file: src=/usr/share/zoneinfo/{{timezone}}
@@ -38,7 +38,7 @@
     - iotop
     - wget
     - tcpdump
-    - htop
+#   - htop
     - man
     - lsof
 
