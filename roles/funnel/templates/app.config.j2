@@ -116,9 +116,17 @@
         {ignore_bw_list_resp_timeout,{{fun_ignore_bw_list_resp_timeout}}},
         {smpp_pdu_log_dir,          "log/smpp"},
         {file_log_size,             5000000},
+        {async_threshold, 20}, %% smpp logger throttling per connection
 {% endif %}
 
         {config_structure_stub,     ignore_me}
+    ]},
+
+    %% 3.6.0 and above
+    {pmm_smpplib, [
+        {file_info_check_rate, 100},
+        {delayed_write_bytes, 1048576},
+        {delayed_write_mseconds, 5000}
     ]},
 
 {% if mnp_cron is defined and mnp_cron %}
