@@ -13,6 +13,7 @@
          [{settings,[{default_encoding,"latin1"},
                      {default_bitness,"7"},
                      {convert_receipt_msgid,"false"},
+                     {convert_response_msgid, "false"},
                      {address_range,""},
                      {concurrent_requests,"260"},
                      %% "Type1;Addr1;Port1;SystemId1;Password1/Type2;..."
