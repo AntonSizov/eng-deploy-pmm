@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo "$(dirname $(readlink -f "$0"))"
+BASEDIR="$(dirname $(readlink -f "$0"))"
+
+cd $BASEDIR
+
 ONLY_ENG_CONFIG=$4
 if [[ "${ONLY_ENG_CONFIG}" == "" ]]; then
     ONLY_ENG_CONFIG="false"
@@ -7,9 +12,9 @@ else
     ONLY_ENG_CONFIG="true"
 fi
 
-VERSION_FILE=$(dirname $0)/version
-DEPLOY_YML=$(dirname $0)/deploy.yml
-CREDENTIALS=$(dirname $0)/credentials
+VERSION_FILE=./version
+DEPLOY_YML=./deploy.yml
+CREDENTIALS=./credentials
 CURRENT_VERSION=$(cat ${VERSION_FILE})
 LAST_VERSION=$(curl -H 'Cache-Control:max-age=0' -s https://raw.githubusercontent.com/AntonSizov/eng-deploy-pmm/master/version)
 
@@ -32,9 +37,8 @@ COMMIT_HASH=$(git log -1 | head -1 | awk '{print $2}' | cut -c 1-7)
 USER=$(whoami)
 if [[ "$USER" == "root" ]]; then
     DOCKER_BASE="/etc/ansible/playbooks/eng-deploy-pmm"
-    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-    if [[ "$(dirname ${DIR})" == "$DOCKER_BASE" ]]; then
-        USER=$(basename ${DIR})
+    if [[ "$(dirname ${BASEDIR})" == "$DOCKER_BASE" ]]; then
+        USER=$(basename ${BASEDIR})
     else
         USER="unknown"
     fi
@@ -139,7 +143,7 @@ version=$3
 
 containsElement "$host_name" "${hosts[@]}"
 if [[ $(echo $?) == "0" ]]; then
-    host_name=$(dirname $0)/inventories/${host_name}
+    host_name=${BASEDIR}/inventories/${host_name}
 else
     host_name=${host_name},
     printf "\e[1;33m[WARN] Unknown host: $host_name\e[0m\n"
