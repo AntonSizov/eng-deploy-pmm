@@ -1,0 +1,23 @@
+---
+
+- name: Check whether smppload installed
+  stat: path=/opt/smppload-2.4.0
+  register: smppload
+  changed_when: false
+
+- name: Download smppload
+  get_url:
+    url=http://sus.dev1team.net/sus/poweralley/smppload-2.4.0-{{os_version}}.x86_64.tar.gz
+    dest=/tmp
+    url_username={{ lookup('env','SUS_USERNAME') }}
+    url_password={{ lookup('env','SUS_PASSWORD') }}
+  when: not smppload.stat.exists
+
+- name: Unarchive smppload
+  unarchive: src=/tmp/smppload-2.4.0-{{os_version}}.x86_64.tar.gz
+             dest=/opt/
+             copy=false
+  when: not smppload.stat.exists
+
+- name: Create symlink to smppload
+  file: state=link src=/opt/smppload-2.4.0/smppload dest=/usr/bin/smppload

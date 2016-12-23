@@ -74,6 +74,7 @@ services=(
     standalone_j3
     standalone_fun
     eng
+    smppload
 )
 
 function print_help {
@@ -127,6 +128,7 @@ fi
 
 
 if [[ $# < 2 ]]; then
+    echo "Missing args."
     print_help
     exit 1
 fi
