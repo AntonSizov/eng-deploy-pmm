@@ -32,7 +32,7 @@
     - screen
     - xz
     - emacs
-    - mail
+#    - mail
     - nano
     - bc
     - iotop
@@ -49,7 +49,8 @@
 
 - name: Install ESL Erlang
   yum:
-    name=https://packages.erlang-solutions.com/erlang/esl-erlang/FLAVOUR_1_general/esl-erlang_16.b.3-1~centos~6_amd64.rpm
+#    name=https://packages.erlang-solutions.com/erlang/esl-erlang/FLAVOUR_1_general/esl-erlang_16.b.3-1~centos~6_amd64.rpm
+    name=http://packages.erlang-solutions.com/site/esl/esl-erlang/FLAVOUR_1_general/esl-erlang_18.3.4-1~centos~7_amd64.rpm
     state=present
   when: erlang_rpm_check.stdout.find('is not installed') != -1
 
