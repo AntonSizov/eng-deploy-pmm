@@ -1,0 +1,10 @@
+[batelco-pp-eng]
+eng1 ansible_ssh_host=10.10.151.140 ansible_ssh_user=root
+eng2 ansible_ssh_host=10.10.151.141 ansible_ssh_user=root
+
+[batelco]
+eng1
+eng2
+
+[outdoors]
+# keep it empty for indoors
