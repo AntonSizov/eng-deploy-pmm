@@ -39,7 +39,7 @@ fun_concat_max_wait:           60000
 fun_cutoff_validity_period:    'false'
 fun_deliver_sm_window_size:    20
 fun_throttle_group_seconds:    3
-fun_backend_response_time:     1000
+fun_backend_response_time:     5000
 fun_max_stop_time:             120000
 fun_smpp_enable_tcp:           'true'
 fun_smpp_ssl_enable:           'false'
