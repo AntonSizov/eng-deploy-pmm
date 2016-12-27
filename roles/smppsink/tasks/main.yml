@@ -1,0 +1,24 @@
+---
+
+
+- name: Check whether smppsink installed
+  stat: path=/opt/smppsink-1.4.0
+  register: smppsink
+  changed_when: false
+
+- name: Download smppsink
+  get_url:
+    url=http://sus.dev1team.net/sus/poweralley/smppsink-1.4.0-{{os_version}}.x86_64.tar.gz
+    dest=/tmp
+    url_username={{ lookup('env','SUS_USERNAME') }}
+    url_password={{ lookup('env','SUS_PASSWORD') }}
+  when: not smppsink.stat.exists
+
+- name: Unarchive smppsink
+  unarchive: src=/tmp/smppsink-1.4.0-{{os_version}}.x86_64.tar.gz
+             dest=/opt/
+             copy=false
+  when: not smppsink.stat.exists
+
+- name: Create symlink to smppsink
+  file: state=link src=/opt/smppsink-1.4.0 dest=/opt/smppsink

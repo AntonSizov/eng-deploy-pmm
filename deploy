@@ -79,6 +79,7 @@ services=(
     standalone_fun
     eng
     smppload
+    smppsink
 )
 
 function print_help {
