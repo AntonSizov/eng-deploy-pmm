@@ -21,3 +21,4 @@
 
 - name: Create symlink to smppload
   file: state=link src=/opt/smppload-2.4.0/smppload dest=/usr/bin/smppload
+  file: state=link src=/opt/smppload-2.4.0 dest=/opt/smppload
