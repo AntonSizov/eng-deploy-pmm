@@ -1,0 +1,8 @@
+[viva-stg-eng]
+eng1 ansible_ssh_host=10.10.150.116 ansible_ssh_user=root
+
+[viva]
+eng1
+
+[outdoors]
+# keep it empty for indoors

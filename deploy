@@ -69,6 +69,8 @@ hosts=(
     asiacell-conf
     pmmv6-stg
     pmmv6-conf
+    viva-stg
+    viva-conf
 )
 
 declare -a services

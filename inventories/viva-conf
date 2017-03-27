@@ -1,0 +1,2 @@
+[viva-stg-eng]
+local ansible_connection=local
