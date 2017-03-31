@@ -1,0 +1,10 @@
+[zain-sa-testbed-eng]
+eng1 ansible_ssh_host=10.157.0.41 ansible_ssh_user=root
+eng2 ansible_ssh_host=10.157.0.42 ansible_ssh_user=root
+
+[zain-sa]
+eng1
+eng2
+
+[outdoors]
+# keep it empty for indoors

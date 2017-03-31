@@ -55,6 +55,7 @@ hosts=(
     zain-sa-m3
     zain-sa-pp
     zain-sa-stg
+    zain-sa-testbed
     zain-sa-conf
     zain-kw-stg
     zain-kw-pp
