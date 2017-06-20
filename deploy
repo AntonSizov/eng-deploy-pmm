@@ -54,6 +54,7 @@ declare -a hosts
 hosts=(
     mtn-stg
     mtn-prod
+    zain-sa-prod
     zain-sa-m3
     zain-sa-pp
     zain-sa-stg
@@ -72,6 +73,7 @@ hosts=(
     asiacell-conf
     pmmv6-stg
     pmmv6-conf
+    pmmv6-prod
     viva-stg
     viva-conf
 )

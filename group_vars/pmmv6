@@ -1,8 +1,8 @@
 ---
 os_version: centos6
 
-funnel_svc_name: svc-fun
-just_svc_name: svc-j3
+funnel_svc_name: svc-funnel
+just_svc_name: svc-just
 
 rabbitmq_host: ip-rabbit
 

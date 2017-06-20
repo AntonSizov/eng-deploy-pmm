@@ -1,0 +1,12 @@
+[zain-sa-prod-eng]
+eng1 ansible_ssh_host=10.158.0.244 ansible_ssh_user=root
+eng2 ansible_ssh_host=10.158.0.245 ansible_ssh_user=root
+eng3 ansible_ssh_host=10.158.0.246 ansible_ssh_user=root
+
+[zain-sa]
+eng1
+eng2
+eng3
+
+[outdoors]
+# keep it empty for indoors

@@ -1,0 +1,10 @@
+[pmmv6-prod-eng]
+eng1 ansible_ssh_host=46.101.129.234 ansible_ssh_user=root ansible_ssh_port=6437
+eng2 ansible_ssh_host=46.101.209.8 ansible_ssh_user=root ansible_ssh_port=6437
+
+[pmmv6]
+eng1
+eng2
+
+[outdoors]
+# keep it empty for indoors
