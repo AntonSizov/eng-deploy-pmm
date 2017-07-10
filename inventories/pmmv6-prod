@@ -1,6 +1,6 @@
 [pmmv6-prod-eng]
-eng1 ansible_ssh_host=46.101.129.234 ansible_ssh_user=root ansible_ssh_port=6437
-eng2 ansible_ssh_host=46.101.209.8 ansible_ssh_user=root ansible_ssh_port=6437
+eng1 ansible_ssh_host=188.166.7.193 ansible_ssh_user=root ansible_ssh_port=6437
+eng2 ansible_ssh_host=188.166.63.156 ansible_ssh_user=root ansible_ssh_port=6437
 
 [pmmv6]
 eng1
