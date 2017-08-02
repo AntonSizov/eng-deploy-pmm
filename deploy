@@ -52,6 +52,7 @@ containsElement () {
 
 declare -a hosts
 hosts=(
+    mobily-stg
     mtn-stg
     mtn-prod
     zain-sa-prod
