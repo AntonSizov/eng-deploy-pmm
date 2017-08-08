@@ -64,6 +64,8 @@
         {pid_file,                  "funnel.pid"},
         {rotate_tracker_db_at,      {daily, {3, 0, 0}}},  %% local; no dst; false | erlcron:run_when()
         {reload_mnp_at,             false},               %% local; no dst; false | erlcron:run_when()
+        {mnp_reload_batch_processing_timeout, 10000},
+        {dlr_msg_datetime_to_local, false},
 {% endif %}
 
 {% if service_version | version_compare('3.5.0', '>=') and service_version | version_compare('3.6.0', '<') %}
