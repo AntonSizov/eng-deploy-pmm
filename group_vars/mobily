@@ -4,7 +4,7 @@ os_version: centos6
 funnel_svc_name: svc-fun
 just_svc_name: svc-j3
 
-rabbitmq_host: ip-rabbit
+rabbitmq_host: ip-rab
 
 funnel_data_dir: /mnt/fs-fun/funnel-data
 just_data_dir: /mnt/fs-j3/just-data/
