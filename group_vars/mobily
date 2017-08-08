@@ -12,6 +12,7 @@ just_data_dir: /mnt/fs-j3/just-data/
 mnp_state: 'on'
 mnp_enabled: 'true'
 mnp_home_network_id: 9e0eca13-93be-45f0-80b6-177b1b6f3a74
+mnp_reload_batch_processing_timeout: 120000
 
 just_instance: BMSENG1
 just_odbc_dsn: 'DSN=mmwl'
