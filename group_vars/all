@@ -40,6 +40,8 @@ mnp_enabled: 'false'
 mnp_home_network_id: 36a46262-e249-4416-b7a3-447d58927be4
 mnp_cron: False
 
+dlr_msg_datetime_to_local: 'false'
+
 fun_smpp_enable_tcp:           'true'
 fun_smpp_server_addr:          '{0, 0, 0, 0}'
 fun_smpp_server_port:          8001
