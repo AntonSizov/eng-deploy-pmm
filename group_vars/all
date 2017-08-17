@@ -39,6 +39,7 @@ mnp_state: 'off'
 mnp_enabled: 'false'
 mnp_home_network_id: 36a46262-e249-4416-b7a3-447d58927be4
 mnp_cron: False
+mnp_reload_batch_processing_timeout: 10000
 
 dlr_msg_datetime_to_local: 'false'
 

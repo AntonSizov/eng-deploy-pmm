@@ -64,7 +64,7 @@
         {pid_file,                  "funnel.pid"},
         {rotate_tracker_db_at,      {daily, {3, 0, 0}}},  %% local; no dst; false | erlcron:run_when()
         {reload_mnp_at,             false},               %% local; no dst; false | erlcron:run_when()
-        {mnp_reload_batch_processing_timeout, 10000},
+        {mnp_reload_batch_processing_timeout, {{mnp_reload_batch_processing_timeout}} },
         {dlr_msg_datetime_to_local, {{dlr_msg_datetime_to_local}} },
 {% endif %}
 
